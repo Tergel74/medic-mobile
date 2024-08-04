@@ -1,17 +1,8 @@
-import { getStorageItem } from "@/lib/storage";
-
 const API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL;
 
 export async function get(endpoint: string) {
     try {
-        const token = await getStorageItem("token");
-
-        const res = await fetch(`${API_BASE_URL}${endpoint}`, {
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-            },
-        });
+        const res = await fetch(`${API_BASE_URL}${endpoint}`);
         const responseData = await res.json();
 
         return responseData;
@@ -22,12 +13,10 @@ export async function get(endpoint: string) {
 }
 export async function post(endpoint: string, data: {}) {
     try {
-        const token = await getStorageItem("token");
         const res = await fetch(`${API_BASE_URL}${endpoint}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify(data),
         });

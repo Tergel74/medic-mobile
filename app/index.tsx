@@ -7,15 +7,12 @@ import { Redirect, router } from "expo-router";
 import CustomButton from "@/components/CustomButton";
 
 export default function Index() {
-    const { isLoading, isLoggedIn } = useGlobalContext();
+    const { isLoading, isLoggedIn, hospitals, serviceType } =
+        useGlobalContext();
 
     if (!isLoading && isLoggedIn) {
-        return <Redirect href="/home" />;
+        return <Redirect href="/dashboard" />;
     }
-    // else if (isLoading && !isLoggedIn) {
-    //     console.log(isLoggedIn);
-    //     return <Redirect href="/sign-in" />;
-    // }
 
     return (
         <SafeAreaView className="h-full bg-primary justify-center items-center px-4">

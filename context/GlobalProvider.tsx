@@ -1,3 +1,4 @@
+import { getHospitals, getServiceType } from "@/api/repositories/repository";
 import { getStorageItem } from "@/lib/storage";
 import { router } from "expo-router";
 import { createContext, useContext, useState, useEffect } from "react";
@@ -9,6 +10,9 @@ const GlobalProvider = ({ children }: any) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [user, setUser] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [hospitals, setHospitals] = useState(null);
+    const [hospital, setHospital] = useState();
+    const [serviceTypes, setServiceTypes] = useState(null);
 
     useEffect(() => {
         getStorageItem("token")
@@ -51,6 +55,12 @@ const GlobalProvider = ({ children }: any) => {
                 user,
                 setUser,
                 isLoading,
+                hospitals,
+                setHospitals,
+                hospital,
+                setHospital,
+                serviceTypes,
+                setServiceTypes,
             }}
         >
             {children}

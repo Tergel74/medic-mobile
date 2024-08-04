@@ -1,4 +1,4 @@
-import { post } from "../utils/api-http-client";
+import { post } from "../utils/auth-api-http-client";
 
 export async function signIn(email: string, password: string) {
     try {
