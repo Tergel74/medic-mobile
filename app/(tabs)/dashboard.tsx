@@ -33,31 +33,33 @@ export default function Dashboard() {
     };
 
     return (
-        <SafeAreaView className="h-full flex-row justify-center mt-2 px-4">
-            <DatePicker
-                onChange={(date) => {
-                    setDate(date);
-                }}
-                pickerBtnStyle="w-[28vw]"
-            />
-            <DropDown
-                data={hospitals}
-                onChange={(item) => {
-                    setHospital(item);
-                }}
-                initialValue={hospital}
-                dropDownBtnStyle="w-[30vw]"
-                dropDownStyle="min-w-[30vw]"
-            />
-            <DropDown
-                data={services}
-                onChange={(item) => {
-                    setService(item);
-                }}
-                initialValue={initialServiceType}
-                dropDownBtnStyle="w-[30vw]"
-                dropDownStyle="min-w-[30vw]"
-            />
+        <SafeAreaView className="h-full">
+            <View className="flex-row justify-center">
+                <DatePicker
+                    onChange={(date) => {
+                        setDate(date);
+                    }}
+                    pickerBtnStyle="w-[28vw] mr-2"
+                />
+                <DropDown
+                    data={hospitals}
+                    onChange={(item) => {
+                        setHospital(item);
+                    }}
+                    initialValue={hospital}
+                    dropDownBtnStyle="w-[28vw] mr-2"
+                    dropDownStyle="min-w-[28vw]"
+                />
+                <DropDown
+                    data={services}
+                    onChange={(item) => {
+                        setService(item);
+                    }}
+                    initialValue={initialServiceType}
+                    dropDownBtnStyle="w-[20vw]"
+                    dropDownStyle="min-w-[20vw]"
+                />
+            </View>
         </SafeAreaView>
     );
 }

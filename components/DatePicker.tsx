@@ -69,112 +69,102 @@ export default function DatePicker({
     );
 
     return (
-        <>
-            <View
-                ref={buttonRef}
-                onLayout={(event) => {
-                    const layout = event.nativeEvent.layout;
-                    const topOffset = layout.y;
-                    const heightOfComponent = layout.height;
-                    const leftOffset = layout.x;
+        <View
+            ref={buttonRef}
+            onLayout={(event) => {
+                event.currentTarget.measureInWindow((x, y, width, height) => {
+                    const finalTop =
+                        y + height + (Platform.OS === "android" ? 0 : 3);
 
-                    const finalValue =
-                        topOffset +
-                        heightOfComponent +
-                        (Platform.OS === "android" ? -32 : 3);
-
-                    setTop(finalValue);
-                    setLeft(leftOffset);
-                }}
+                    setTop(finalTop);
+                    setLeft(x);
+                });
+            }}
+        >
+            <TouchableOpacity
+                className={`justify-between bg-white flex-row w-[40vw] items-center p-3 rounded-lg h-12 border ${
+                    expanded ? "border-primary" : "border-gray-100"
+                } ${pickerBtnStyle}`}
+                activeOpacity={0.8}
+                onPress={toggleExpanded}
             >
-                <TouchableOpacity
-                    className={`justify-between bg-white flex-row w-[40vw] items-center p-3 rounded-lg h-12 border ${
-                        expanded ? "border-primary" : "border-gray-100"
-                    } ${pickerBtnStyle}`}
-                    activeOpacity={0.8}
-                    onPress={toggleExpanded}
-                >
-                    <View className="w-[80%]">
-                        <Text className="text-base">{`${selectedYear}-0${selectedMonth}`}</Text>
-                    </View>
+                <View className="w-[80%]">
+                    <Text className="text-base">{`${selectedYear}-0${selectedMonth}`}</Text>
+                </View>
 
-                    <Fontisto name="date" />
-                </TouchableOpacity>
-                {expanded ? (
-                    <Modal visible={expanded} transparent>
-                        <TouchableWithoutFeedback
-                            onPress={() => setExpanded(false)}
-                        >
-                            <View className="flex-1 justify-center items-center">
-                                <View
-                                    style={[
-                                        {
-                                            top,
-                                            left,
-                                        },
-                                    ]}
-                                    className={`absolute bg-white p-1 rounded-lg max-w-[64vw]`}
-                                >
-                                    <View className="p-3 rounded-sm">
-                                        <ScrollView horizontal>
-                                            {years.map((year) => (
-                                                <TouchableOpacity
-                                                    key={year}
-                                                    onPress={() =>
-                                                        handleYearChange(year)
-                                                    }
-                                                    className="px-3 mb-2"
+                <Fontisto name="date" />
+            </TouchableOpacity>
+            {expanded ? (
+                <Modal visible={expanded} transparent className="relative">
+                    <TouchableWithoutFeedback
+                        onPress={() => setExpanded(false)}
+                    >
+                        <View className="flex-1 justify-center items-center">
+                            <View
+                                style={[
+                                    {
+                                        top: top,
+                                        left,
+                                    },
+                                ]}
+                                className={`absolute bg-white p-1 rounded-lg max-w-[64vw]`}
+                            >
+                                <View className="p-3 rounded-sm">
+                                    <ScrollView horizontal>
+                                        {years.map((year) => (
+                                            <TouchableOpacity
+                                                key={year}
+                                                onPress={() =>
+                                                    handleYearChange(year)
+                                                }
+                                                className="px-3 mb-2"
+                                            >
+                                                <Text
+                                                    className={`text-base ${
+                                                        year === selectedYear &&
+                                                        "font-bold text-primary"
+                                                    }`}
+                                                >
+                                                    {year}
+                                                </Text>
+                                            </TouchableOpacity>
+                                        ))}
+                                    </ScrollView>
+                                    <View className="flex-row flex-wrap justify-center">
+                                        {months.map((month, index) => (
+                                            <TouchableOpacity
+                                                key={month}
+                                                onPress={() =>
+                                                    handleMonthChange(index + 1)
+                                                }
+                                                className="w-[25%] p-2 items-center"
+                                            >
+                                                <View
+                                                    className={`border border-gray-100 w-12 h-8 rounded-md justify-center items-center ${
+                                                        index + 1 ===
+                                                            selectedMonth &&
+                                                        "bg-primary"
+                                                    }`}
                                                 >
                                                     <Text
                                                         className={`text-base ${
-                                                            year ===
-                                                                selectedYear &&
-                                                            "font-bold text-primary"
-                                                        }`}
-                                                    >
-                                                        {year}
-                                                    </Text>
-                                                </TouchableOpacity>
-                                            ))}
-                                        </ScrollView>
-                                        <View className="flex-row flex-wrap justify-center">
-                                            {months.map((month, index) => (
-                                                <TouchableOpacity
-                                                    key={month}
-                                                    onPress={() =>
-                                                        handleMonthChange(
-                                                            index + 1
-                                                        )
-                                                    }
-                                                    className="w-[25%] p-2 items-center"
-                                                >
-                                                    <View
-                                                        className={`border border-gray-100 w-12 h-8 rounded-md justify-center items-center ${
                                                             index + 1 ===
                                                                 selectedMonth &&
-                                                            "bg-primary"
+                                                            "text-white"
                                                         }`}
                                                     >
-                                                        <Text
-                                                            className={`text-base ${
-                                                                index + 1 ===
-                                                                    selectedMonth &&
-                                                                "text-white"
-                                                            }`}
-                                                        >
-                                                            {month}
-                                                        </Text>
-                                                    </View>
-                                                </TouchableOpacity>
-                                            ))}
-                                        </View>
+                                                        {month}
+                                                    </Text>
+                                                </View>
+                                            </TouchableOpacity>
+                                        ))}
                                     </View>
                                 </View>
                             </View>
-                        </TouchableWithoutFeedback>
-                    </Modal>
-                ) : null}
-            </View>
-        </>
+                        </View>
+                    </TouchableWithoutFeedback>
+                </Modal>
+            ) : null}
+        </View>
     );
 }

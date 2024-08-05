@@ -54,18 +54,25 @@ export default function DropDown({
         <View
             ref={buttonRef}
             onLayout={(event) => {
-                const layout = event.nativeEvent.layout;
-                const topOffset = layout.y;
-                const leftOffset = layout.x;
-                const heightOfComponent = layout.height;
+                // const layout = event.nativeEvent.layout;
+                // const topOffset = layout.y;
+                // const leftOffset = layout.x;
+                // const heightOfComponent = layout.height;
 
-                const finalTopValue =
-                    topOffset +
-                    heightOfComponent +
-                    (Platform.OS === "android" ? -32 : 3);
+                // const finalTop =
+                //     topOffset +
+                //     heightOfComponent +
+                //     (Platform.OS === "android" ? -32 : 3);
 
-                setTop(finalTopValue);
-                setLeft(leftOffset);
+                // setTop(finalTop);
+                // setLeft(leftOffset);
+                event.currentTarget.measureInWindow((x, y, width, height) => {
+                    const finalTop =
+                        y + height + (Platform.OS === "android" ? 0 : 3);
+
+                    setTop(finalTop);
+                    setLeft(x);
+                });
             }}
         >
             <TouchableOpacity
