@@ -20,6 +20,8 @@ export default function TabsLayout() {
         setHospitals,
         setHospital,
         setServiceTypes,
+        setServiceType,
+        serviceTypes,
     } = useGlobalContext();
     const [appIsReady, setAppIsReady] = useState(false);
     const userData = JSON.parse(user);

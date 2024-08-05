@@ -43,6 +43,7 @@ export default function DropDown({
     const buttonRef = useRef<View>(null);
 
     const [top, setTop] = useState(0);
+    const [left, setLeft] = useState(0);
 
     const onSelect = useCallback((item: OptionItem) => {
         onChange(item);
@@ -55,18 +56,22 @@ export default function DropDown({
             onLayout={(event) => {
                 const layout = event.nativeEvent.layout;
                 const topOffset = layout.y;
+                const leftOffset = layout.x;
                 const heightOfComponent = layout.height;
 
-                const finalValue =
+                const finalTopValue =
                     topOffset +
                     heightOfComponent +
                     (Platform.OS === "android" ? -32 : 3);
 
-                setTop(finalValue);
+                setTop(finalTopValue);
+                setLeft(leftOffset);
             }}
         >
             <TouchableOpacity
-                className={`justify-between bg-white flex-row w-[40vw] items-center p-3 rounded-lg h-12 ${dropDownBtnStyle}`}
+                className={`justify-between bg-white flex-row w-[40vw] items-center p-3 rounded-lg h-12 border ${dropDownBtnStyle} ${
+                    expanded ? "border-primary" : "border-gray-100"
+                }`}
                 activeOpacity={0.8}
                 onPress={toggleExpanded}
             >
@@ -74,7 +79,7 @@ export default function DropDown({
                     <Text className="text-base">{value}</Text>
                 </View>
 
-                <AntDesign name={expanded ? "caretup" : "caretdown"} />
+                <AntDesign name={expanded ? "up" : "down"} />
             </TouchableOpacity>
             {expanded ? (
                 <Modal visible={expanded} transparent>
@@ -86,9 +91,10 @@ export default function DropDown({
                                 style={[
                                     {
                                         top,
+                                        left,
                                     },
                                 ]}
-                                className={`absolute bg-white w-[40vw] p-3 rounded-lg max-h-[250px] ${dropDownStyle}`}
+                                className={`absolute bg-white max-w-[40vw] p-2 rounded-lg max-h-[250px] ${dropDownStyle}`}
                             >
                                 <FlatList
                                     keyExtractor={(item) => item.id}
@@ -96,10 +102,20 @@ export default function DropDown({
                                     renderItem={({ item }) => (
                                         <TouchableOpacity
                                             activeOpacity={0.8}
-                                            className="justify-center h-6"
+                                            className={`justify-center px-2 rounded-sm h-6 ${
+                                                item.name === value &&
+                                                "bg-primary"
+                                            }`}
                                             onPress={() => onSelect(item)}
                                         >
-                                            <Text>{item.name}</Text>
+                                            <Text
+                                                className={`${
+                                                    item.name === value &&
+                                                    "text-white"
+                                                }`}
+                                            >
+                                                {item.name}
+                                            </Text>
                                         </TouchableOpacity>
                                     )}
                                     ItemSeparatorComponent={() => (
