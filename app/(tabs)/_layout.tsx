@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import React, { useCallback, useEffect, useState } from "react";
 import { Drawer } from "expo-router/drawer";
@@ -20,8 +20,6 @@ export default function TabsLayout() {
         setHospitals,
         setHospital,
         setServiceTypes,
-        setServiceType,
-        serviceTypes,
     } = useGlobalContext();
     const [appIsReady, setAppIsReady] = useState(false);
     const userData = JSON.parse(user);
@@ -94,6 +92,7 @@ export default function TabsLayout() {
                 }
             >
                 <Drawer.Screen
+                    key={"dashboard"}
                     name="dashboard"
                     options={{
                         drawerLabel: "Хянах самбар",
@@ -109,12 +108,11 @@ export default function TabsLayout() {
                             />
                         ),
                         drawerActiveBackgroundColor: "#84bca3",
-                        // drawerActiveBackgroundColor: "#097947",
                         drawerActiveTintColor: "#097947",
-                        // drawerActiveTintColor: "#FFFFFF",
                     }}
                 />
                 <Drawer.Screen
+                    key={"analysis"}
                     name="analysis"
                     options={{
                         drawerLabel: "Шинжилгээ",

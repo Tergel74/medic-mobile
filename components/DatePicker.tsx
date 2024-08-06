@@ -55,11 +55,20 @@ export default function DatePicker({
 
     const handleYearChange = (year) => {
         setSelectedYear(year);
+        onChange(
+            `${year.toString()}-${
+                selectedMonth.toString().length == 1 ? "0" : ""
+            }${selectedMonth.toString()}-01`
+        );
     };
 
     const handleMonthChange = (month) => {
         setSelectedMonth(month);
-        onChange(`${selectedYear.toString()}-0${selectedMonth.toString()}-01`);
+        onChange(
+            `${selectedYear.toString()}-${
+                month.toString().length == 1 ? "0" : ""
+            }${month.toString()}-01`
+        );
         toggleExpanded();
     };
 
@@ -89,7 +98,9 @@ export default function DatePicker({
                 onPress={toggleExpanded}
             >
                 <View className="w-[80%]">
-                    <Text className="text-base">{`${selectedYear}-0${selectedMonth}`}</Text>
+                    <Text className="text-base">{`${selectedYear}-${
+                        selectedMonth.toString().length == 1 ? "0" : ""
+                    }${selectedMonth}`}</Text>
                 </View>
 
                 <Fontisto name="date" />
