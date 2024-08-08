@@ -33,10 +33,10 @@ const CustomColumnChart = ({
                 element.type == "MRI"
                     ? (element.frontColor = "forestgreen")
                     : element.type == "CT"
-                    ? (element.frontColor = "orange")
+                    ? (element.frontColor = "forestgreen")
                     : element.type == "PET/CT"
-                    ? (element.frontColor = "dodgerblue")
-                    : (element.frontColor = "peru");
+                    ? (element.frontColor = "forestgreen")
+                    : (element.frontColor = "forestgreen");
         });
     });
     const { serviceTypes } = useGlobalContext();
@@ -77,9 +77,11 @@ const CustomColumnChart = ({
         <View
             className={`justify-center items-center rounded-lg border border-gray-100 w-[94vw] h-[42vh] bg-white p-2 ${containerStyle}`}
         >
-            <Text className="text-base font-semibold mb-3">{title}</Text>
             {chartReady && data.length ? (
                 <>
+                    <Text className="text-base font-semibold mb-3">
+                        {title}
+                    </Text>
                     <BarChart
                         data={chartData}
                         height={200}
@@ -103,11 +105,6 @@ const CustomColumnChart = ({
                         selectedOption={types[0]}
                         onOptionPress={setChartType}
                     />
-                    {/* <SegmentedControl
-                        values={["hi", "hi"]}
-                        enabled
-                        className="w-full h-12 bg-red-300"
-                    /> */}
                 </>
             ) : (
                 <View className="justify-center items-center space-y-2">
