@@ -14,10 +14,10 @@ export default function DataView({
 }: DataViewProps) {
     return (
         <View
-            className={`bg-white w-[45%] mt-4 h-[12vh] border border-gray-100 rounded-lg p-4 justify-center ${containerStyle}`}
+            className={`bg-white w-[46%] h-[8vh] mt-1 border border-gray-100 rounded-lg p-4 justify-center ${containerStyle}`}
         >
             <Text className="text-base">{title}</Text>
-            <Text className="text-2xl font-bold mt-1">
+            <Text className="text-xl font-bold mt-1">
                 {data != null ? data : 0}
             </Text>
         </View>

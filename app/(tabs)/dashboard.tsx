@@ -1,4 +1,11 @@
-import { View, Text, TouchableOpacity, Alert, ScrollView } from "react-native";
+import {
+    View,
+    Text,
+    TouchableOpacity,
+    Alert,
+    ScrollView,
+    FlatList,
+} from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getDashboard } from "@/api/repositories/repository";
@@ -9,6 +16,7 @@ import DropDown from "@/components/DropDown";
 import DataView from "@/components/DataView";
 import CustomColumnChart from "@/components/CustomColumnChart";
 import SortableTable from "@/components/SortableTable";
+import SortableList from "@/components/SortableList";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -85,28 +93,33 @@ export default function Dashboard() {
                 {dashboard ? (
                     <View className="items-center justify-center mt-2">
                         <View className="flex-row justify-center flex-wrap">
+                            {/* tailor it to mobile -> make smaller and remove hariu garsan and hariu garaagui */}
                             {dashboard.systemCountData.map(
                                 (
                                     data: { name: string; cnt: number },
                                     index: any
-                                ) => (
-                                    <DataView
-                                        key={data.name}
-                                        title={data.name}
-                                        data={data.cnt}
-                                        containerStyle="mx-2"
-                                    />
-                                )
+                                ) =>
+                                    data.name != "Хариу гарсан" &&
+                                    data.name != "Хариу гараагүй" ? (
+                                        <DataView
+                                            key={data.name}
+                                            title={data.name}
+                                            data={data.cnt}
+                                            containerStyle="mx-1"
+                                        />
+                                    ) : null
                             )}
                         </View>
                         <View className="mt-4 flex-1 items-center justify-center">
+                            {/* buh field iig zereg harah shiidel oloh -> can change graph */}
                             <CustomColumnChart
                                 data={dashboard.monthBookingData}
                                 title="Үйлчлүүлэгчидийн тоо/Өдөр/"
                             />
                         </View>
                         <View className="mt-4 flex-1 items-center justify-center">
-                            <SortableTable
+                            {/* tailor to mobile, list of emch nar with minimal data that can expand and have an overall sort */}
+                            {/* <SortableTable
                                 data={dashboard.doctorAvgHour}
                                 title="Эмч нарын хариу гаргалт"
                                 headers={[
@@ -128,6 +141,27 @@ export default function Dashboard() {
                                     "Яаралтай 36+ цагт гарсан хариуны тоо":
                                         "cntUrgent36",
                                 }}
+                            /> */}
+                            <SortableList
+                                data={dashboard.doctorAvgHour}
+                                title="Эмч нарын хариу гаргалт"
+                                headers={[
+                                    "Нийт Тоо",
+                                    "Энгийн хариу дундаж",
+                                    "72+ цагт гарсан хариуны тоо",
+                                    "Яаралтай хариуны тоо",
+                                    "Яаралтай хариуны дундаж хугацаа",
+                                    "Яаралтай 36+ цагт гарсан хариуны тоо",
+                                ]}
+                                miniHeaders={["Нийт", "Дундаж", "72+"]}
+                                keys={[
+                                    "cnt",
+                                    "avgHour",
+                                    "cnt72",
+                                    "cntUrgent",
+                                    "urgentAvg",
+                                    "cntUrgent36",
+                                ]}
                             />
                         </View>
                         {/* resp iig yanzlah */}
@@ -138,6 +172,7 @@ export default function Dashboard() {
                             />
                         </View> */}
                         <ScrollView horizontal className="mx-2">
+                            {/* amount iig has and solution same with the firtsh graph */}
                             {weekDataTypeKeys.map((key, index) => (
                                 <TouchableOpacity
                                     className={`h-14 p-2 justify-center items-center my-4 mx-2 w-[26vw] ${
@@ -171,6 +206,7 @@ export default function Dashboard() {
                         </View> */}
                         {/* Table iin response uurchluh, type aar tusdaa array irdeg bolgoh */}
                         <View className="mt-4 flex-1 items-center justify-center">
+                            {/* remove further fields of data */}
                             <SortableTable
                                 data={dashboard.doctorAvgHour}
                                 title={`MRI Дата`}
