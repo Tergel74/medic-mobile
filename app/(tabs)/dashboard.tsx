@@ -17,6 +17,7 @@ import DataView from "@/components/DataView";
 import CustomColumnChart from "@/components/CustomColumnChart";
 import SortableTable from "@/components/SortableTable";
 import SortableList from "@/components/SortableList";
+import CustomGraph from "@/components/CustomGraph";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -112,7 +113,11 @@ export default function Dashboard() {
                         </View>
                         <View className="mt-4 flex-1 items-center justify-center">
                             {/* buh field iig zereg harah shiidel oloh -> can change graph */}
-                            <CustomColumnChart
+                            {/* <CustomColumnChart
+                                data={dashboard.monthBookingData}
+                                title="Үйлчлүүлэгчидийн тоо/Өдөр/"
+                            /> */}
+                            <CustomGraph
                                 data={dashboard.monthBookingData}
                                 title="Үйлчлүүлэгчидийн тоо/Өдөр/"
                             />
