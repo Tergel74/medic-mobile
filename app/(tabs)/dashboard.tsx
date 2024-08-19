@@ -11,20 +11,18 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { getDashboard } from "@/api/repositories/repository";
 import { useGlobalContext } from "@/context/GlobalProvider";
 import { SplashScreen } from "expo-router";
-import DatePicker from "@/components/DatePicker";
 import DropDown from "@/components/DropDown";
 import DataView from "@/components/DataView";
 import CustomColumnChart from "@/components/CustomColumnChart";
 import SortableTable from "@/components/SortableTable";
 import SortableList from "@/components/SortableList";
 import CustomGraph from "@/components/CustomGraph";
+import CustomMonthPicker from "@/components/CustomMonthPicker";
 
 SplashScreen.preventAutoHideAsync();
 
 enum WeekDataType {
     WeekAvgCount = "Дундаж тоо",
-    WeekAvgAmount = "Дундаж дүн",
-    WeekSumCount = "7 хоног/дүн/",
     WeekSumAmount = "7 хоног/Тоо/",
 }
 
@@ -66,7 +64,7 @@ export default function Dashboard() {
         <SafeAreaView className="h-full">
             <ScrollView>
                 <View className="flex-row justify-center">
-                    <DatePicker
+                    <CustomMonthPicker
                         onChange={(date) => {
                             setDate(date);
                         }}
@@ -112,7 +110,6 @@ export default function Dashboard() {
                             )}
                         </View>
                         <View className="mt-4 flex-1 items-center justify-center">
-                            {/* buh field iig zereg harah shiidel oloh -> can change graph */}
                             {/* <CustomColumnChart
                                 data={dashboard.monthBookingData}
                                 title="Үйлчлүүлэгчидийн тоо/Өдөр/"
@@ -123,7 +120,6 @@ export default function Dashboard() {
                             />
                         </View>
                         <View className="mt-4 flex-1 items-center justify-center">
-                            {/* tailor to mobile, list of emch nar with minimal data that can expand and have an overall sort */}
                             {/* <SortableTable
                                 data={dashboard.doctorAvgHour}
                                 title="Эмч нарын хариу гаргалт"
@@ -210,17 +206,6 @@ export default function Dashboard() {
                             />
                         </View> */}
                         {/* Table iin response uurchluh, type aar tusdaa array irdeg bolgoh */}
-                        <View className="mt-4 flex-1 items-center justify-center">
-                            {/* remove further fields of data */}
-                            <SortableTable
-                                data={dashboard.doctorAvgHour}
-                                title={`MRI Дата`}
-                                headers={["Нэр", "Тоо", "Хувь"]}
-                                keys={{
-                                    Тоо: "cnt",
-                                }}
-                            />
-                        </View>
                     </View>
                 ) : (
                     <View></View>

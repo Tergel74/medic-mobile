@@ -23,17 +23,6 @@ export default function CustomGraph({
                     fontSize: 10,
                 }),
                 (element.textShiftY = -10);
-            element.type == "MRI"
-                ? ((element.dataPointColor = "forestgreen"),
-                  (element.textColor = "forestgreen"))
-                : element.type == "CT"
-                ? ((element.dataPointColor = "orange"),
-                  (element.textColor = "orange"))
-                : element.type == "PET/CT"
-                ? ((element.dataPointColor = "dodgerblue"),
-                  (element.textColor = "dodgerblue"))
-                : ((element.dataPointColor = "peru"),
-                  (element.textColor = "peru"));
         });
     });
     const [chartReady, setChartReady] = useState(false);
@@ -70,26 +59,36 @@ export default function CustomGraph({
                         <LineChart
                             data={chartData[0]}
                             color1="forestgreen"
-                            startFillColor1="forestgreen"
+                            startFillColor1="rgba(34, 139, 34, 0.2)"
                             data2={chartData[1]}
                             color2="orange"
-                            startFillColor2="orange"
+                            startFillColor2="rgba(255, 165, 0, 0.2)"
                             data3={chartData[2]}
                             color3="dodgerblue"
-                            startFillColor3="dodgerblue"
+                            startFillColor3="rgba(30, 144, 255, 0.2)"
                             data4={chartData[3]}
                             color4="peru"
-                            startFillColor4="peru"
+                            startFillColor4="rgba(205, 133, 63, 0.2)"
                             // areaChart
                             width={chartWidth}
                             spacing={spacingWidth}
-                            maxValue={120}
+                            maxValue={110}
                             mostNegativeValue={0}
                             isAnimated
+                            curved
+                            lineGradient={false}
+                            // intersectionAreaConfig={{
+                            //     fillColor: "rgba(255, 0, 0, 0.2)",
+                            // }}
+                            dataPointsColor1="forestgreen"
+                            dataPointsColor2="orange"
+                            dataPointsColor3="dodgerblue"
+                            dataPointsColor4="peru"
+                            // textColor="black"
                         />
                     </View>
                     <View className="w-full h-[1px] bg-gray-400"></View>
-                    <View className="flex-row items-center justify-start mt-2 w-[76%] h-4 space-x-3">
+                    <View className="flex-row items-center justify-start mt-2 w-[70%] h-4 space-x-4">
                         <View className="flex-row justify-center items-center space-x-1">
                             <View
                                 className="w-3 h-3 rounded-full"
