@@ -9,6 +9,8 @@ import { useGlobalContext } from "@/context/GlobalProvider";
 import { setStorageItem } from "@/lib/storage";
 import { router, SplashScreen } from "expo-router";
 import { getHospitals, getServiceType } from "@/api/repositories/repository";
+import Animated, { useEvent, useHandler } from "react-native-reanimated";
+import Carousel from "react-native-reanimated-carousel";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -20,6 +22,8 @@ export default function TabsLayout() {
         setHospitals,
         setHospital,
         setServiceTypes,
+        hospitals,
+        hospital,
     } = useGlobalContext();
     const [appIsReady, setAppIsReady] = useState(false);
     const userData = JSON.parse(user);
@@ -73,11 +77,12 @@ export default function TabsLayout() {
         setIsLoggedIn(false);
         router.replace("/sign-in");
     };
+
     return (
         <GestureHandlerRootView onLayout={onLayoutRootView}>
             <Drawer
                 screenOptions={{
-                    headerShown: false,
+                    // headerShown: false,
                     headerTintColor: "#097947",
                     headerTitleStyle: {
                         color: "#000000",
@@ -86,6 +91,24 @@ export default function TabsLayout() {
                     drawerLabelStyle: {
                         marginLeft: -20,
                     },
+                    // headerTitle: hospital.name,
+                    headerTitle: (props) => (
+                        <Carousel
+                            loop
+                            width={200}
+                            height={30}
+                            data={hospitals}
+                            scrollAnimationDuration={1000}
+                            onSnapToItem={(index) =>
+                                console.log("current index:", index)
+                            }
+                            renderItem={({ item }) => (
+                                <Text className="font-semibold tet-xl">
+                                    "skdns"
+                                </Text>
+                            )}
+                        />
+                    ),
                 }}
                 drawerContent={(props) =>
                     CustomDrawerContent({ props, signOut, userData })
