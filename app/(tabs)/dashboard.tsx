@@ -18,6 +18,7 @@ import SortableTable from "@/components/SortableTable";
 import SortableList from "@/components/SortableList";
 import CustomGraph from "@/components/CustomGraph";
 import CustomMonthPicker from "@/components/CustomMonthPicker";
+import AntDesign from "@expo/vector-icons/AntDesign";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -42,6 +43,13 @@ export default function Dashboard() {
     const [weekDataType, setWeekDataType] = useState(WeekDataType.WeekAvgCount);
     const weekDataTypeKeys = Object.keys(WeekDataType);
 
+    const dataIcons = [
+        <AntDesign name="team" size={32} color="#494949" />,
+        <AntDesign name="clockcircleo" size={32} color="#494949" />,
+        <AntDesign name="clockcircleo" size={32} color="#494949" />,
+        <AntDesign name="pushpino" size={32} color="#494949" />,
+    ];
+
     const getData = async () => {
         try {
             const data = await getDashboard(date, service.id, hospital.id);
@@ -61,23 +69,14 @@ export default function Dashboard() {
     }, [date, service, hospital]);
 
     return (
-        <SafeAreaView className="h-full">
+        <View className="h-full py-2 px-1 bg-white">
             <ScrollView>
                 <View className="flex-row justify-center">
                     <CustomMonthPicker
                         onChange={(date) => {
                             setDate(date);
                         }}
-                        pickerBtnStyle="w-[35vw] mr-2"
-                    />
-                    <DropDown
-                        data={hospitals}
-                        onChange={(item) => {
-                            setHospital(item);
-                        }}
-                        initialValue={hospital}
-                        dropDownBtnStyle="w-[35vw] mr-2"
-                        dropDownStyle="min-w-[35vw]"
+                        pickerBtnStyle="w-[45vw] mr-2"
                     />
                     <DropDown
                         data={services}
@@ -85,8 +84,8 @@ export default function Dashboard() {
                             setService(item);
                         }}
                         initialValue={initialServiceType}
-                        dropDownBtnStyle="w-[20vw]"
-                        dropDownStyle="min-w-[20vw]"
+                        dropDownBtnStyle="w-[45vw]"
+                        dropDownStyle="min-w-[45vw]"
                     />
                 </View>
                 {dashboard ? (
@@ -96,7 +95,7 @@ export default function Dashboard() {
                             {dashboard.systemCountData.map(
                                 (
                                     data: { name: string; cnt: number },
-                                    index: any
+                                    index: number
                                 ) =>
                                     data.name != "Хариу гарсан" &&
                                     data.name != "Хариу гараагүй" ? (
@@ -104,7 +103,8 @@ export default function Dashboard() {
                                             key={data.name}
                                             title={data.name}
                                             data={data.cnt}
-                                            containerStyle="mx-1"
+                                            containerStyle="mx-2"
+                                            icon={dataIcons[index]}
                                         />
                                     ) : null
                             )}
@@ -211,6 +211,6 @@ export default function Dashboard() {
                     <View></View>
                 )}
             </ScrollView>
-        </SafeAreaView>
+        </View>
     );
 }

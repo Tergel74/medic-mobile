@@ -31,7 +31,7 @@ export default function CustomDrawerContent({
                             ? images.med_trauma_logo
                             : images.brilliant_logo
                     }
-                    className="w-24 h-24"
+                    className="w-28 h-28"
                     resizeMode="contain"
                 />
             </View>

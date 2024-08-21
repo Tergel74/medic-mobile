@@ -9,8 +9,8 @@ import { useGlobalContext } from "@/context/GlobalProvider";
 import { setStorageItem } from "@/lib/storage";
 import { router, SplashScreen } from "expo-router";
 import { getHospitals, getServiceType } from "@/api/repositories/repository";
-import Animated, { useEvent, useHandler } from "react-native-reanimated";
 import Carousel from "react-native-reanimated-carousel";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -93,21 +93,52 @@ export default function TabsLayout() {
                     },
                     // headerTitle: hospital.name,
                     headerTitle: (props) => (
-                        <Carousel
-                            loop
-                            width={200}
-                            height={30}
-                            data={hospitals}
-                            scrollAnimationDuration={1000}
-                            onSnapToItem={(index) =>
-                                console.log("current index:", index)
-                            }
-                            renderItem={({ item }) => (
-                                <Text className="font-semibold tet-xl">
-                                    "skdns"
-                                </Text>
-                            )}
-                        />
+                        <View className="w-[60vw] h-full relative items-center">
+                            <MaterialIcons
+                                name="arrow-back-ios-new"
+                                size={12}
+                                color="black"
+                                style={{
+                                    position: "absolute",
+                                    left: 0,
+                                    top: "36%",
+                                }}
+                            />
+                            <Carousel
+                                loop
+                                width={200}
+                                height={30}
+                                data={hospitals}
+                                scrollAnimationDuration={1000}
+                                defaultIndex={hospital.id - 1}
+                                onSnapToItem={(index) =>
+                                    setHospital(hospitals[index])
+                                }
+                                renderItem={({ index }) => (
+                                    <View className="justify-center items-center flex-1">
+                                        <Text className="font-semibold text-lg">
+                                            {hospitals[index].name}
+                                        </Text>
+                                    </View>
+                                )}
+                                style={{
+                                    height: "100%",
+                                    width: 200,
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                }}
+                            />
+                            <MaterialIcons
+                                name="arrow-forward-ios"
+                                size={12}
+                                color="black"
+                                style={{
+                                    position: "absolute",
+                                    right: 0,
+                                    top: "36%",
+                                }}
+                            />
+                        </View>
                     ),
                 }}
                 drawerContent={(props) =>

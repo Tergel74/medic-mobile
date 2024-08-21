@@ -45,6 +45,7 @@ export default function CustomGraph({
     const { width } = Dimensions.get("window");
     const chartWidth = width - 120;
     const spacingWidth = chartWidth / 9;
+    const chartColors = ["forestgreen", "orange", "dodgerblue", "peru"];
 
     return (
         <View
@@ -89,34 +90,30 @@ export default function CustomGraph({
                     </View>
                     <View className="w-full h-[1px] bg-gray-400"></View>
                     <View className="flex-row items-center justify-start mt-2 w-[70%] h-4 space-x-4">
-                        <View className="flex-row justify-center items-center space-x-1">
-                            <View
-                                className="w-3 h-3 rounded-full"
-                                style={{ backgroundColor: "forestgreen" }}
-                            ></View>
-                            <Text>MRI</Text>
-                        </View>
-                        <View className="flex-row justify-center items-center space-x-1">
-                            <View
-                                className="w-3 h-3 rounded-full"
-                                style={{ backgroundColor: "orange" }}
-                            ></View>
-                            <Text>CT</Text>
-                        </View>
-                        <View className="flex-row justify-center items-center space-x-1">
-                            <View
-                                className="w-3 h-3 rounded-full"
-                                style={{ backgroundColor: "dodgerblue" }}
-                            ></View>
-                            <Text>PET/CT</Text>
-                        </View>
-                        <View className="flex-row justify-center items-center space-x-1">
-                            <View
-                                className="w-3 h-3 rounded-full"
-                                style={{ backgroundColor: "peru" }}
-                            ></View>
-                            <Text>Рентген</Text>
-                        </View>
+                        {chartData.length > 1 ? (
+                            chartData.map((data, index) => (
+                                <View
+                                    key={index}
+                                    className="flex-row justify-center items-center space-x-1"
+                                >
+                                    <View
+                                        className="w-3 h-3 rounded-full"
+                                        style={{
+                                            backgroundColor: chartColors[index],
+                                        }}
+                                    ></View>
+                                    <Text>{data[0].type}</Text>
+                                </View>
+                            ))
+                        ) : (
+                            <View className="flex-row justify-center items-center space-x-1">
+                                <View
+                                    className="w-3 h-3 rounded-full"
+                                    style={{ backgroundColor: "forestgreen" }}
+                                ></View>
+                                <Text>{chartData[0][0].type}</Text>
+                            </View>
+                        )}
                     </View>
                 </>
             ) : (
