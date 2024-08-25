@@ -1,6 +1,7 @@
 import { View, Text, FlatList, TouchableOpacity } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
 import { SimpleLineIcons } from "@expo/vector-icons";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 type SortableListProps = {
     containerStyle?: string;
@@ -38,13 +39,22 @@ export default function SortableList({
 
     return (
         <View
-            className={`justify-center items-center rounded-lg border border-gray-100 w-[94vw] bg-white p-4 ${containerStyle}`}
+            className={`justify-center items-center mx-2 p-2 ${containerStyle}`}
         >
             {data.length ? (
                 <View className="w-full">
-                    <Text className="text-base text-center font-semibold mb-4 ml-4">
-                        {title}
-                    </Text>
+                    <View className="flex-row justify-between items-center flex-wrap w-full mb-4 ml-1">
+                        <Text className="text-base text-center font-semibold mb-4">
+                            {title}
+                        </Text>
+                        <TouchableOpacity className="mr-1" onPress={() => {}}>
+                            <FontAwesome
+                                name="sort"
+                                size={24}
+                                color="forestgreen"
+                            />
+                        </TouchableOpacity>
+                    </View>
 
                     <FlatList
                         data={listData}
@@ -56,13 +66,15 @@ export default function SortableList({
                                         onPress={() => toggleExpanded(index)}
                                     >
                                         {expandedIds.includes(index) ? (
-                                            <View className="border border-gray-100 h-52 mb-2 rounded-md">
+                                            <View className="bg-white-100 h-56 mb-2 rounded-lg py-2">
                                                 <View className="h-[20%] flex-row items-center ">
-                                                    <Text className="px-4">
+                                                    <Text className="px-4 text-base">
                                                         {item.firstname}
                                                     </Text>
                                                 </View>
-                                                <View className="h-[2px] bg-primary"></View>
+                                                <View className="w-full items-center">
+                                                    <View className="h-[2px] w-[92%] bg-primary"></View>
+                                                </View>
                                                 <View className="h-[80%] px-4 space-y-2.5 justify-center">
                                                     {headers.map(
                                                         (name, index) => {
@@ -75,13 +87,18 @@ export default function SortableList({
                                                                         {name}
                                                                     </Text>
                                                                     <Text className="font-semibold">
-                                                                        {
-                                                                            item[
-                                                                                keys[
-                                                                                    index
-                                                                                ]
+                                                                        {item[
+                                                                            keys[
+                                                                                index
                                                                             ]
-                                                                        }
+                                                                        ] !=
+                                                                        null
+                                                                            ? item[
+                                                                                  keys[
+                                                                                      index
+                                                                                  ]
+                                                                              ]
+                                                                            : 0}
                                                                     </Text>
                                                                 </View>
                                                             );
@@ -90,9 +107,9 @@ export default function SortableList({
                                                 </View>
                                             </View>
                                         ) : (
-                                            <View className="border border-gray-100 h-14 flex-row items-center justify-center mb-2 rounded-md">
+                                            <View className="bg-white-100 h-14 flex-row items-center justify-center mb-2 rounded-lg">
                                                 <View className="w-[40%] px-4">
-                                                    <Text className="">
+                                                    <Text className="text-base">
                                                         {item.firstname}
                                                     </Text>
                                                 </View>
@@ -108,13 +125,18 @@ export default function SortableList({
                                                                         {name}
                                                                     </Text>
                                                                     <Text className="font-semibold">
-                                                                        {
-                                                                            item[
-                                                                                keys[
-                                                                                    index
-                                                                                ]
+                                                                        {item[
+                                                                            keys[
+                                                                                index
                                                                             ]
-                                                                        }
+                                                                        ] !=
+                                                                        null
+                                                                            ? item[
+                                                                                  keys[
+                                                                                      index
+                                                                                  ]
+                                                                              ]
+                                                                            : 0}
                                                                     </Text>
                                                                 </View>
                                                             );

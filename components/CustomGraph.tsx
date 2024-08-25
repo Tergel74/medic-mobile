@@ -43,20 +43,52 @@ export default function CustomGraph({
     }, [data, chartData]);
 
     const { width } = Dimensions.get("window");
-    const chartWidth = width - 120;
+    const chartWidth = width - 90;
     const spacingWidth = chartWidth / 9;
     const chartColors = ["forestgreen", "orange", "dodgerblue", "peru"];
 
     return (
         <View
-            className={`justify-center items-center rounded-lg border border-gray-100 w-[94vw] h-[42vh] bg-white p-2 ${containerStyle}`}
+            className={`justify-center items-center rounded-lg w-[90vw] h-[40vh] bg-white ${containerStyle}`}
+            // className={`justify-center items-center rounded-lg border border-gray-100 w-[94vw] h-[42vh] bg-white p-2 ${containerStyle}`}
         >
             {chartReady && chartData.length ? (
                 <>
-                    <Text className="text-base font-semibold mb-3">
-                        {title}
-                    </Text>
-                    <View className="ml-3 w-full h-[76%]">
+                    <View className=" flex-row justify-between items-center flex-wrap w-full mb-4 ml-1">
+                        <Text className="text-base font-semibold">{title}</Text>
+                        <View className="flex-row items-center justify-start h-6 space-x-4">
+                            {chartData.length > 1 ? (
+                                chartData.map((data, index) => (
+                                    <View
+                                        key={index}
+                                        className="flex-row justify-center items-center space-x-1"
+                                    >
+                                        <View
+                                            className="w-3 h-3 rounded-full"
+                                            style={{
+                                                backgroundColor:
+                                                    chartColors[index],
+                                            }}
+                                        ></View>
+                                        <Text className="text-base font-semibold">
+                                            {data[0].type}
+                                        </Text>
+                                    </View>
+                                ))
+                            ) : (
+                                <View className="flex-row justify-center items-center space-x-1">
+                                    <View
+                                        className="w-3 h-3 rounded-full"
+                                        style={{
+                                            backgroundColor: "forestgreen",
+                                        }}
+                                    ></View>
+                                    <Text>{chartData[0][0].type}</Text>
+                                </View>
+                            )}
+                        </View>
+                    </View>
+                    <View className="w-full -ml-3 h-[80%]">
                         <LineChart
                             data={chartData[0]}
                             color1="forestgreen"
@@ -87,33 +119,6 @@ export default function CustomGraph({
                             dataPointsColor4="peru"
                             // textColor="black"
                         />
-                    </View>
-                    <View className="w-full h-[1px] bg-gray-400"></View>
-                    <View className="flex-row items-center justify-start mt-2 w-[70%] h-4 space-x-4">
-                        {chartData.length > 1 ? (
-                            chartData.map((data, index) => (
-                                <View
-                                    key={index}
-                                    className="flex-row justify-center items-center space-x-1"
-                                >
-                                    <View
-                                        className="w-3 h-3 rounded-full"
-                                        style={{
-                                            backgroundColor: chartColors[index],
-                                        }}
-                                    ></View>
-                                    <Text>{data[0].type}</Text>
-                                </View>
-                            ))
-                        ) : (
-                            <View className="flex-row justify-center items-center space-x-1">
-                                <View
-                                    className="w-3 h-3 rounded-full"
-                                    style={{ backgroundColor: "forestgreen" }}
-                                ></View>
-                                <Text>{chartData[0][0].type}</Text>
-                            </View>
-                        )}
                     </View>
                 </>
             ) : (

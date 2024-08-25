@@ -78,7 +78,7 @@ export default function DropDown({
             }}
         >
             <TouchableOpacity
-                className={`justify-between bg-white flex-row w-[40vw] items-center p-3 rounded-lg h-12 border ${dropDownBtnStyle} ${
+                className={`justify-between bg-white flex-row w-[40vw] items-center px-3 rounded-lg h-10 border shadow-sm ${dropDownBtnStyle} ${
                     expanded ? "border-primary" : "border-gray-100"
                 }`}
                 activeOpacity={0.8}
@@ -88,7 +88,7 @@ export default function DropDown({
                     <Text className="text-base">{value}</Text>
                 </View>
 
-                <AntDesign name={expanded ? "up" : "down"} />
+                <AntDesign name={expanded ? "up" : "down"} size={14} />
             </TouchableOpacity>
             {expanded ? (
                 <Modal visible={expanded} transparent>
@@ -103,7 +103,7 @@ export default function DropDown({
                                         left,
                                     },
                                 ]}
-                                className={`absolute bg-white max-w-[40vw] p-2 rounded-lg max-h-[250px] ${dropDownStyle}`}
+                                className={`absolute bg-white max-w-[44vw] p-2 rounded-lg max-h-[250px] border border-gray-100 ${dropDownStyle}`}
                             >
                                 <FlatList
                                     keyExtractor={(item) => item.id}
@@ -111,7 +111,7 @@ export default function DropDown({
                                     renderItem={({ item }) => (
                                         <TouchableOpacity
                                             activeOpacity={0.8}
-                                            className={`justify-center px-2 rounded-sm h-6 ${
+                                            className={`justify-center px-2 min-w-full rounded-sm h-6 ${
                                                 item.name === value &&
                                                 "bg-primary"
                                             }`}

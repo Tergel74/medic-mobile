@@ -91,7 +91,7 @@ export default function CustomMonthPicker({
             }}
         >
             <TouchableOpacity
-                className={`justify-between bg-white flex-row w-[40vw] items-center p-3 rounded-lg h-12 border ${
+                className={`justify-between bg-white flex-row w-[40vw] items-center px-3 rounded-lg h-10 border shadow-sm ${
                     expanded ? "border-primary" : "border-gray-100"
                 } ${pickerBtnStyle}`}
                 activeOpacity={0.8}
@@ -103,7 +103,7 @@ export default function CustomMonthPicker({
                     }${selectedMonth}`}</Text>
                 </View>
 
-                <Fontisto name="date" />
+                <Fontisto name="date" size={14} />
             </TouchableOpacity>
             {expanded ? (
                 <Modal visible={expanded} transparent className="relative">
@@ -118,7 +118,7 @@ export default function CustomMonthPicker({
                                         left,
                                     },
                                 ]}
-                                className={`absolute bg-white p-1 rounded-lg max-w-[64vw]`}
+                                className={`absolute bg-white p-1 rounded-lg border border-gray-100 max-w-[64vw]`}
                             >
                                 <View className="p-3 rounded-sm">
                                     <ScrollView horizontal>

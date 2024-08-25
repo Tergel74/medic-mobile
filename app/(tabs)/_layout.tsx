@@ -91,6 +91,7 @@ export default function TabsLayout() {
                     drawerLabelStyle: {
                         marginLeft: -20,
                     },
+                    headerStatusBarHeight: 50,
                     // headerTitle: hospital.name,
                     headerTitle: (props) => (
                         <View className="w-[60vw] h-full relative items-center">

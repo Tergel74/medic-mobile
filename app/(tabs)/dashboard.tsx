@@ -18,7 +18,7 @@ import SortableTable from "@/components/SortableTable";
 import SortableList from "@/components/SortableList";
 import CustomGraph from "@/components/CustomGraph";
 import CustomMonthPicker from "@/components/CustomMonthPicker";
-import AntDesign from "@expo/vector-icons/AntDesign";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -44,10 +44,10 @@ export default function Dashboard() {
     const weekDataTypeKeys = Object.keys(WeekDataType);
 
     const dataIcons = [
-        <AntDesign name="team" size={32} color="#494949" />,
-        <AntDesign name="clockcircleo" size={32} color="#494949" />,
-        <AntDesign name="clockcircleo" size={32} color="#494949" />,
-        <AntDesign name="pushpino" size={32} color="#494949" />,
+        <Ionicons name="people" size={34} color="forestgreen" />,
+        <Ionicons name="time" size={34} color="forestgreen" />,
+        <Ionicons name="time" size={34} color="forestgreen" />,
+        <Ionicons name="analytics-sharp" size={34} color="forestgreen" />,
     ];
 
     const getData = async () => {
@@ -71,12 +71,12 @@ export default function Dashboard() {
     return (
         <View className="h-full py-2 px-1 bg-white">
             <ScrollView>
-                <View className="flex-row justify-center">
+                <View className="flex-row justify-center mt-1">
                     <CustomMonthPicker
                         onChange={(date) => {
                             setDate(date);
                         }}
-                        pickerBtnStyle="w-[45vw] mr-2"
+                        pickerBtnStyle="w-[44vw] mr-2"
                     />
                     <DropDown
                         data={services}
@@ -84,12 +84,12 @@ export default function Dashboard() {
                             setService(item);
                         }}
                         initialValue={initialServiceType}
-                        dropDownBtnStyle="w-[45vw]"
-                        dropDownStyle="min-w-[45vw]"
+                        dropDownBtnStyle="w-[44vw]"
+                        dropDownStyle="min-w-[44vw]"
                     />
                 </View>
                 {dashboard ? (
-                    <View className="items-center justify-center mt-2">
+                    <View className="items-center justify-center mt-4">
                         <View className="flex-row justify-center flex-wrap">
                             {/* tailor it to mobile -> make smaller and remove hariu garsan and hariu garaagui */}
                             {dashboard.systemCountData.map(
@@ -109,18 +109,22 @@ export default function Dashboard() {
                                     ) : null
                             )}
                         </View>
-                        <View className="mt-4 flex-1 items-center justify-center">
-                            {/* <CustomColumnChart
+                        {dashboard.monthBookingData.length ? (
+                            <View className="flex-1 items-center justify-center">
+                                {/* <CustomColumnChart
                                 data={dashboard.monthBookingData}
                                 title="Үйлчлүүлэгчидийн тоо/Өдөр/"
                             /> */}
-                            <CustomGraph
-                                data={dashboard.monthBookingData}
-                                title="Үйлчлүүлэгчидийн тоо/Өдөр/"
-                            />
-                        </View>
-                        <View className="mt-4 flex-1 items-center justify-center">
-                            {/* <SortableTable
+                                <CustomGraph
+                                    data={dashboard.monthBookingData}
+                                    title="Үйлчлүүлэгчидийн тоо/Өдөр/"
+                                />
+                            </View>
+                        ) : null}
+
+                        {dashboard.doctorAvgHour.length ? (
+                            <View className="flex-1 items-center justify-center -mt-4">
+                                {/* <SortableTable
                                 data={dashboard.doctorAvgHour}
                                 title="Эмч нарын хариу гаргалт"
                                 headers={[
@@ -143,28 +147,30 @@ export default function Dashboard() {
                                         "cntUrgent36",
                                 }}
                             /> */}
-                            <SortableList
-                                data={dashboard.doctorAvgHour}
-                                title="Эмч нарын хариу гаргалт"
-                                headers={[
-                                    "Нийт Тоо",
-                                    "Энгийн хариу дундаж",
-                                    "72+ цагт гарсан хариуны тоо",
-                                    "Яаралтай хариуны тоо",
-                                    "Яаралтай хариуны дундаж хугацаа",
-                                    "Яаралтай 36+ цагт гарсан хариуны тоо",
-                                ]}
-                                miniHeaders={["Нийт", "Дундаж", "72+"]}
-                                keys={[
-                                    "cnt",
-                                    "avgHour",
-                                    "cnt72",
-                                    "cntUrgent",
-                                    "urgentAvg",
-                                    "cntUrgent36",
-                                ]}
-                            />
-                        </View>
+                                <SortableList
+                                    data={dashboard.doctorAvgHour}
+                                    title="Эмч нарын хариу гаргалт"
+                                    headers={[
+                                        "Нийт Тоо",
+                                        "Энгийн хариу дундаж",
+                                        "72+ цагт гарсан хариуны тоо",
+                                        "Яаралтай хариуны тоо",
+                                        "Яаралтай хариуны дундаж хугацаа",
+                                        "Яаралтай 36+ цагт гарсан хариуны тоо",
+                                    ]}
+                                    miniHeaders={["Нийт", "Дундаж", "72+"]}
+                                    keys={[
+                                        "cnt",
+                                        "avgHour",
+                                        "cnt72",
+                                        "cntUrgent",
+                                        "urgentAvg",
+                                        "cntUrgent36",
+                                    ]}
+                                />
+                            </View>
+                        ) : null}
+
                         {/* resp iig yanzlah */}
                         {/* <View className="mt-4 flex-1 items-center justify-center">
                             <CustomColumnChart
@@ -172,40 +178,45 @@ export default function Dashboard() {
                                 title="Үйлчлүүлэгчидийн тоо/Цаг/"
                             />
                         </View> */}
-                        <ScrollView horizontal className="mx-2">
-                            {/* amount iig has and solution same with the firtsh graph */}
-                            {weekDataTypeKeys.map((key, index) => (
-                                <TouchableOpacity
-                                    className={`h-14 p-2 justify-center items-center my-4 mx-2 w-[26vw] ${
-                                        weekDataType == WeekDataType[key]
-                                            ? "border-b border-primary"
-                                            : ""
-                                    }`}
-                                    key={key}
-                                    onPress={() => {
-                                        toggleWeekDataType(WeekDataType[key]);
-                                    }}
-                                >
-                                    <Text
-                                        className={`text-base ${
+                        <>
+                            <ScrollView horizontal className="mx-2 -my-8">
+                                {/* amount iig has and solution same with the firtsh graph */}
+                                {weekDataTypeKeys.map((key, index) => (
+                                    <TouchableOpacity
+                                        className={`h-14 p-2 justify-center items-center my-4 mx-2 w-[26vw] ${
                                             weekDataType == WeekDataType[key]
-                                                ? "text-primary"
+                                                ? "border-b border-primary"
                                                 : ""
                                         }`}
+                                        key={key}
+                                        onPress={() => {
+                                            toggleWeekDataType(
+                                                WeekDataType[key]
+                                            );
+                                        }}
                                     >
-                                        {WeekDataType[key]}
-                                    </Text>
-                                </TouchableOpacity>
-                            ))}
-                        </ScrollView>
-                        {/* response iig bas salgah, mun label value bolgoh */}
-                        {/* <View className="mt-4 flex-1 items-center justify-center">
+                                        <Text
+                                            className={`text-base ${
+                                                weekDataType ==
+                                                WeekDataType[key]
+                                                    ? "text-primary"
+                                                    : ""
+                                            }`}
+                                        >
+                                            {WeekDataType[key]}
+                                        </Text>
+                                    </TouchableOpacity>
+                                ))}
+                            </ScrollView>
+                            {/* response iig bas salgah, mun label value bolgoh */}
+                            {/* <View className="mt-4 flex-1 items-center justify-center">
                         <CustomColumnChart
                                 data={weekDataType == WeekDataType.WeekAvgCount }
                                 title="Үйлчлүүлэгчидийн тоо/Цаг/"
                             />
                         </View> */}
-                        {/* Table iin response uurchluh, type aar tusdaa array irdeg bolgoh */}
+                            {/* Table iin response uurchluh, type aar tusdaa array irdeg bolgoh */}
+                        </>
                     </View>
                 ) : (
                     <View></View>
