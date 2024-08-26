@@ -106,7 +106,12 @@ export default function CustomMonthPicker({
                 <Fontisto name="date" size={14} />
             </TouchableOpacity>
             {expanded ? (
-                <Modal visible={expanded} transparent className="relative">
+                <Modal
+                    visible={expanded}
+                    animationType="fade"
+                    transparent
+                    className="relative"
+                >
                     <TouchableWithoutFeedback
                         onPress={() => setExpanded(false)}
                     >

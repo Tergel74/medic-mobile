@@ -56,7 +56,7 @@ export default function CustomGraph({
                 <>
                     <View className=" flex-row justify-between items-center flex-wrap w-full mb-4 ml-1">
                         <Text className="text-base font-semibold">{title}</Text>
-                        <View className="flex-row items-center justify-start h-6 space-x-4">
+                        <View className="flex-row items-center justify-start h-6 space-x-2">
                             {chartData.length > 1 ? (
                                 chartData.map((data, index) => (
                                     <View

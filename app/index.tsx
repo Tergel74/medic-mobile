@@ -7,8 +7,7 @@ import { Redirect, router } from "expo-router";
 import CustomButton from "@/components/CustomButton";
 
 export default function Index() {
-    const { isLoading, isLoggedIn, hospitals, serviceType } =
-        useGlobalContext();
+    const { isLoading, isLoggedIn } = useGlobalContext();
 
     if (!isLoading && isLoggedIn) {
         return <Redirect href="/dashboard" />;

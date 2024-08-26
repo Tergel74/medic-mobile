@@ -91,7 +91,7 @@ export default function DropDown({
                 <AntDesign name={expanded ? "up" : "down"} size={14} />
             </TouchableOpacity>
             {expanded ? (
-                <Modal visible={expanded} transparent>
+                <Modal visible={expanded} animationType="fade" transparent>
                     <TouchableWithoutFeedback
                         onPress={() => setExpanded(false)}
                     >

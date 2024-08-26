@@ -1,5 +1,14 @@
-import { View, Text, FlatList, TouchableOpacity } from "react-native";
-import React, { useCallback, useEffect, useState } from "react";
+import {
+    View,
+    Text,
+    FlatList,
+    TouchableOpacity,
+    Platform,
+    Modal,
+    TouchableWithoutFeedback,
+    Dimensions,
+} from "react-native";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { SimpleLineIcons } from "@expo/vector-icons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
@@ -22,6 +31,14 @@ export default function SortableList({
 }: SortableListProps) {
     const [listData, setListData] = useState(null);
     const [expandedIds, setExpandedIds] = useState([]);
+    const [sortOpen, setSortOpen] = useState(false);
+
+    const toggleSort = useCallback(() => setSortOpen(!sortOpen), [sortOpen]);
+
+    const buttonRef = useRef<View>(null);
+    const [top, setTop] = useState(0);
+    const [right, setRight] = useState(0);
+    const { width } = Dimensions.get("window");
 
     const toggleExpanded = (index) => {
         setExpandedIds(
@@ -32,6 +49,8 @@ export default function SortableList({
     };
 
     // sorting mechanic
+    const sortDataAsc = () => {};
+    const sortDataDesc = () => {};
 
     useEffect(() => {
         setListData(data);
@@ -47,14 +66,73 @@ export default function SortableList({
                         <Text className="text-base text-center font-semibold mb-4">
                             {title}
                         </Text>
-                        <TouchableOpacity className="mr-1" onPress={() => {}}>
-                            <FontAwesome
-                                name="sort"
-                                size={24}
-                                color="forestgreen"
-                            />
-                        </TouchableOpacity>
+                        <View
+                            ref={buttonRef}
+                            onLayout={(event) => {
+                                event.currentTarget.measureInWindow(
+                                    (x, y, w, h) => {
+                                        const finalTop =
+                                            y +
+                                            h +
+                                            (Platform.OS === "android" ? 0 : 3);
+
+                                        setTop(finalTop);
+                                        setRight(width - x - 20);
+                                    }
+                                );
+                            }}
+                        >
+                            <TouchableOpacity
+                                className="mr-1"
+                                // onPress={toggleSort}
+                            >
+                                <FontAwesome
+                                    name="sort"
+                                    size={24}
+                                    color="forestgreen"
+                                />
+                            </TouchableOpacity>
+                        </View>
                     </View>
+
+                    {/* {sortOpen ? ( */}
+                    <Modal
+                        visible={sortOpen}
+                        animationType="fade"
+                        transparent
+                        className="w-60 h-60 bg-primary"
+                    >
+                        <TouchableWithoutFeedback
+                            onPress={() => setSortOpen(false)}
+                        >
+                            <View className="flex-1 justify-center items-center">
+                                <View
+                                    style={[{}]}
+                                    className={`absolute bg-white max-w-[44vw] p-2 rounded-lg max-h-[250px] border border-gray-100`}
+                                >
+                                    <FlatList
+                                        keyExtractor={(item) =>
+                                            miniHeaders.indexOf(item).toString()
+                                        }
+                                        data={miniHeaders}
+                                        renderItem={({ item }) => (
+                                            <TouchableOpacity
+                                                activeOpacity={0.8}
+                                                className={`justify-center px-2 min-w-full rounded-sm h-6 `}
+                                                onPress={() => {}}
+                                            >
+                                                <Text>{item}</Text>
+                                            </TouchableOpacity>
+                                        )}
+                                        ItemSeparatorComponent={() => (
+                                            <View className="h-1" />
+                                        )}
+                                    />
+                                </View>
+                            </View>
+                        </TouchableWithoutFeedback>
+                    </Modal>
+                    {/* ) : null} */}
 
                     <FlatList
                         data={listData}
@@ -116,7 +194,7 @@ export default function SortableList({
                                                 <View className="w-[60%] flex-row justify-center items-center space-x-6 p-2">
                                                     {miniHeaders.map(
                                                         (name, index) => {
-                                                            return (
+                                                            return index < 3 ? (
                                                                 <View
                                                                     key={name}
                                                                     className="items-center space-y-1"
@@ -139,7 +217,7 @@ export default function SortableList({
                                                                             : 0}
                                                                     </Text>
                                                                 </View>
-                                                            );
+                                                            ) : null;
                                                         }
                                                     )}
                                                 </View>

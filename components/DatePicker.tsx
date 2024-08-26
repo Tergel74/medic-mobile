@@ -33,7 +33,7 @@ export default function DatePicker({
     return (
         <View>
             <TouchableOpacity
-                className={`justify-between bg-white flex-row w-[40vw] items-center p-3 rounded-lg h-12 border ${
+                className={`justify-between bg-white flex-row w-[40vw] items-center px-3 rounded-lg h-10 border shadow-sm ${
                     isDatePickerVisible ? "border-primary" : "border-gray-100"
                 } ${pickerBtnStyle}`}
                 activeOpacity={0.8}
@@ -45,7 +45,7 @@ export default function DatePicker({
                     </Text>
                 </View>
 
-                <Fontisto name="date" />
+                <Fontisto name="date" size={14} />
             </TouchableOpacity>
             <DateTimePickerModal
                 date={date}
@@ -55,6 +55,8 @@ export default function DatePicker({
                 onCancel={hideDatePicker}
                 timePickerModeAndroid="default"
                 buttonTextColorIOS="forestgreen"
+                textColor="black"
+                isDarkModeEnabled={false}
             />
         </View>
     );

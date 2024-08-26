@@ -15,34 +15,25 @@ export default function Analysis() {
         new Date().toISOString().split("T")[0]
     );
     return (
-        <SafeAreaView className="h-full">
+        <View className="h-full py-2 px-1 bg-white">
             <ScrollView>
                 <View className="flex-row justify-center flex-wrap">
-                    <DropDown
-                        data={hospitals}
-                        onChange={(item) => {
-                            setHospital(item);
-                        }}
-                        initialValue={hospital}
-                        dropDownBtnStyle="w-[28vw] mr-1"
-                        dropDownStyle="min-w-[28vw]"
-                    />
                     <DatePicker
                         startValue={new Date()}
                         onChange={(date) => {
                             setStartDate(date);
                         }}
-                        pickerBtnStyle="w-[32vw] mr-1"
+                        pickerBtnStyle="w-[45vw] mr-2"
                     />
                     <DatePicker
                         startValue={new Date()}
                         onChange={(date) => {
                             setEndDate(date);
                         }}
-                        pickerBtnStyle="w-[32vw] mr-1"
+                        pickerBtnStyle="w-[45vw]"
                     />
                 </View>
             </ScrollView>
-        </SafeAreaView>
+        </View>
     );
 }

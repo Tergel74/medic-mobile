@@ -40,6 +40,7 @@ const GlobalProvider = ({ children }: any) => {
                 }
             })
             .catch((err) => {
+                router.replace("/");
                 console.log(err);
             })
             .finally(() => {

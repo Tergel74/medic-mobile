@@ -158,7 +158,14 @@ export default function Dashboard() {
                                         "Яаралтай хариуны дундаж хугацаа",
                                         "Яаралтай 36+ цагт гарсан хариуны тоо",
                                     ]}
-                                    miniHeaders={["Нийт", "Дундаж", "72+"]}
+                                    miniHeaders={[
+                                        "Нийт",
+                                        "Дундаж",
+                                        "72+",
+                                        "Яаралтай тоо",
+                                        "Яаралтай хугацаа",
+                                        "Яаралтай 36+",
+                                    ]}
                                     keys={[
                                         "cnt",
                                         "avgHour",
@@ -178,6 +185,7 @@ export default function Dashboard() {
                                 title="Үйлчлүүлэгчидийн тоо/Цаг/"
                             />
                         </View> */}
+
                         <>
                             <ScrollView horizontal className="mx-2 -my-8">
                                 {/* amount iig has and solution same with the firtsh graph */}

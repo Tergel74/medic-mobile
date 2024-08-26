@@ -70,12 +70,13 @@ export default function TabsLayout() {
         return null;
     }
     const signOut = async () => {
+        router.replace("/sign-in");
+
         await setStorageItem("token");
         await setStorageItem("userInfo");
 
         setUser(null);
         setIsLoggedIn(false);
-        router.replace("/sign-in");
     };
 
     return (
