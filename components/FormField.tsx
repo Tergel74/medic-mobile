@@ -25,7 +25,7 @@ const FormField = ({
         <View className={`space-y-2 ${formStyles}`}>
             {title && <Text className="text-base">{title}</Text>}
 
-            <View className="border-2 border-gray-400 w-full h-16 px-4 rounded-lg focus:border-primary items-center flex-row">
+            <View className="border border-gray-100 w-full h-16 px-4 rounded-lg focus:border-primary items-center flex-row">
                 <TextInput
                     className="flex-1 text-base"
                     value={value}

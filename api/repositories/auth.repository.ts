@@ -6,9 +6,16 @@ export async function signIn(email: string, password: string) {
             email: email,
             password: password,
         });
-        return res;
+
+        // throw error from backend and correct the message
+
+        if (!res.error) {
+            return res;
+        } else {
+            throw new Error(res.error);
+        }
     } catch (err) {
         console.log(err);
-        return err;
+        throw new Error(err);
     }
 }

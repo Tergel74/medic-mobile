@@ -60,7 +60,6 @@ export default function Dashboard() {
     };
 
     const toggleWeekDataType = (key) => {
-        console.log(key);
         setWeekDataType(key);
     };
 

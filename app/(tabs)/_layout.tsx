@@ -26,7 +26,6 @@ export default function TabsLayout() {
         hospital,
     } = useGlobalContext();
     const [appIsReady, setAppIsReady] = useState(false);
-    const userData = JSON.parse(user);
 
     useEffect(() => {
         async function prepare() {
@@ -34,8 +33,9 @@ export default function TabsLayout() {
                 await getHospitals()
                     .then((res) => {
                         setHospitals(res);
+
                         for (var h of res) {
-                            if (h.id == userData.hospitalId) {
+                            if (h.id == user.hospitalId) {
                                 setHospital(h);
                             }
                         }
@@ -144,7 +144,7 @@ export default function TabsLayout() {
                     ),
                 }}
                 drawerContent={(props) =>
-                    CustomDrawerContent({ props, signOut, userData })
+                    CustomDrawerContent({ props, signOut, user })
                 }
             >
                 <Drawer.Screen

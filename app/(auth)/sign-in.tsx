@@ -1,4 +1,4 @@
-import { View, Image, Alert } from "react-native";
+import { View, Image, Alert, Text } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import FormField from "@/components/FormField";
@@ -26,16 +26,21 @@ export default function SignIn() {
             setIsSubmitting(true);
 
             try {
+                // throw error from backend and correct the message
+
                 const user = await signIn(form.email, form.password);
 
                 await setStorageItem("token", user.token);
                 await setStorageItem("userInfo", JSON.stringify(user.profile));
-
                 setUser(user.profile);
                 setIsLoggedIn(true);
                 router.replace("/dashboard");
             } catch (error: any) {
-                Alert.alert("Error", error.message);
+                Alert.alert("Алдаа", error.message);
+                setForm({
+                    email: "",
+                    password: "",
+                });
             } finally {
                 setIsSubmitting(false);
             }
@@ -43,39 +48,69 @@ export default function SignIn() {
     };
 
     return (
-        <SafeAreaView className="bg-primary h-full flex-col items-center">
-            <View className="h-[25vh] justify-center">
-                <Image
-                    source={images.logo}
-                    className="w-28 h-28"
-                    resizeMode="contain"
-                />
-            </View>
-            <View className="h-[100%] w-full bg-white rounded-[60px] items-center px-4">
-                <FormField
-                    value={form.email}
-                    handleChangeText={(e: string) =>
-                        setForm({ ...form, email: e })
-                    }
-                    placeHolder="Нэвтрэх нэр"
-                    formStyles="mt-28"
-                />
-                <FormField
-                    value={form.password}
-                    handleChangeText={(e: string) =>
-                        setForm({ ...form, password: e })
-                    }
-                    placeHolder="Нууц үг"
-                    formStyles="mt-7"
-                    keyboardType="password"
-                />
-                <CustomButton
-                    title="Нэвтрэх"
-                    containerStyles="w-full mt-7"
-                    handlePress={submit}
-                    isLoading={isSubmitting}
-                />
-            </View>
+        <SafeAreaView className="h-full flex-1 items-center justify-center bg-white">
+            <Image
+                source={images.logo}
+                className="w-28 h-28 -mt-12"
+                resizeMode="contain"
+            />
+            {/* <Text className="mt-6 text-2xl">Нэвтрэх</Text> */}
+            <FormField
+                value={form.email}
+                handleChangeText={(e: string) => setForm({ ...form, email: e })}
+                placeHolder="Нэвтрэх нэр"
+                formStyles="mt-6 w-[80%]"
+            />
+            <FormField
+                value={form.password}
+                handleChangeText={(e: string) =>
+                    setForm({ ...form, password: e })
+                }
+                placeHolder="Нууц үг"
+                formStyles="mt-7 w-[80%]"
+                keyboardType="password"
+            />
+            <CustomButton
+                title="Нэвтрэх"
+                containerStyles="w-[80%] mt-7"
+                handlePress={submit}
+                isLoading={isSubmitting}
+            />
         </SafeAreaView>
+        // <SafeAreaView className="bg-primary h-full flex-col items-center">
+        //     <View className="h-[25vh] justify-center">
+        //         <Image
+        //             source={images.logo}
+        //             className="w-28 h-28"
+        //             resizeMode="contain"
+        //         />
+        //     </View>
+        //     <View className="h-[100%] w-full bg-white rounded-[60px] items-center px-4">
+        //         <Text className="mt-20 text-2xl">Нэвтрэх</Text>
+        //         <FormField
+        //             value={form.email}
+        //             handleChangeText={(e: string) =>
+        //                 setForm({ ...form, email: e })
+        //             }
+        //             placeHolder="Нэвтрэх нэр"
+        //             formStyles="mt-12"
+        //         />
+        //         <FormField
+        //             value={form.password}
+        //             handleChangeText={(e: string) =>
+        //                 setForm({ ...form, password: e })
+        //             }
+        //             placeHolder="Нууц үг"
+        //             formStyles="mt-7"
+        //             keyboardType="password"
+        //         />
+        //         <CustomButton
+        //             title="Нэвтрэх"
+        //             containerStyles="w-full mt-7"
+        //             handlePress={submit}
+        //             isLoading={isSubmitting}
+        //         />
+        //     </View>
+        // </SafeAreaView>
     );
 }

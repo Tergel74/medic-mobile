@@ -12,13 +12,13 @@ import { images } from "@/constants";
 type CustomDrawerContentProps = {
     props: any;
     signOut: () => void;
-    userData: any;
+    user: any;
 };
 
 export default function CustomDrawerContent({
     props,
     signOut,
-    userData,
+    user,
 }: CustomDrawerContentProps) {
     const { hospital } = useGlobalContext();
 
@@ -38,10 +38,8 @@ export default function CustomDrawerContent({
             <View className="mx-3 py-2 px-8 flex-row justify-start items-center border border-gray-400 rounded-full my-2 space-x-2">
                 <AntDesign name="user" size={24} color="black" />
                 <View className="flex-col ">
-                    <Text className="text-base font-semibold">{`${userData.lastname[0]}.${userData.firstname}`}</Text>
-                    <Text className="text-sm text-gray-500">
-                        {userData.role}
-                    </Text>
+                    <Text className="text-base font-semibold">{`${user.lastname[0]}.${user.firstname}`}</Text>
+                    <Text className="text-sm text-gray-500">{user.role}</Text>
                 </View>
             </View>
 

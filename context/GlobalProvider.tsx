@@ -1,6 +1,4 @@
-import { getHospitals, getServiceType } from "@/api/repositories/repository";
 import { getStorageItem } from "@/lib/storage";
-import { router } from "expo-router";
 import { createContext, useContext, useState, useEffect } from "react";
 
 const GlobalContext = createContext<any>(null);
@@ -29,7 +27,7 @@ const GlobalProvider = ({ children }: any) => {
                     setIsLoggedIn(true);
                     getStorageItem("userInfo")
                         .then((res) => {
-                            setUser(res);
+                            setUser(JSON.parse(res));
                         })
                         .catch((err) => {
                             console.log(err);
@@ -40,7 +38,6 @@ const GlobalProvider = ({ children }: any) => {
                 }
             })
             .catch((err) => {
-                router.replace("/");
                 console.log(err);
             })
             .finally(() => {
