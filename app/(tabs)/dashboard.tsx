@@ -28,8 +28,7 @@ enum WeekDataType {
 }
 
 export default function Dashboard() {
-    const { hospital, setHospital, hospitals, serviceTypes } =
-        useGlobalContext();
+    const { hospital, serviceTypes } = useGlobalContext();
     const [date, setDate] = useState<string>(
         new Date().toISOString().substring(0, 10)
     );
@@ -68,7 +67,7 @@ export default function Dashboard() {
     }, [date, service, hospital]);
 
     return (
-        <View className="h-full py-2 px-1 bg-white">
+        <View className="h-full py-2 px-1">
             <ScrollView>
                 <View className="flex-row justify-center mt-1">
                     <CustomMonthPicker
@@ -90,62 +89,33 @@ export default function Dashboard() {
                 {dashboard ? (
                     <View className="items-center justify-center mt-4">
                         <View className="flex-row justify-center flex-wrap">
-                            {/* tailor it to mobile -> make smaller and remove hariu garsan and hariu garaagui */}
                             {dashboard.systemCountData.map(
                                 (
                                     data: { name: string; cnt: number },
                                     index: number
-                                ) =>
-                                    data.name != "Хариу гарсан" &&
-                                    data.name != "Хариу гараагүй" ? (
-                                        <DataView
-                                            key={data.name}
-                                            title={data.name}
-                                            data={data.cnt}
-                                            containerStyle="mx-2"
-                                            icon={dataIcons[index]}
-                                        />
-                                    ) : null
+                                ) => (
+                                    <DataView
+                                        key={data.name}
+                                        title={data.name}
+                                        data={data.cnt}
+                                        containerStyle="mx-2"
+                                        icon={dataIcons[index]}
+                                    />
+                                )
                             )}
                         </View>
                         {dashboard.monthBookingData.length ? (
-                            <View className="flex-1 items-center justify-center">
-                                {/* <CustomColumnChart
-                                data={dashboard.monthBookingData}
-                                title="Үйлчлүүлэгчидийн тоо/Өдөр/"
-                            /> */}
+                            <View className="flex-1 w-[90vw] mt-4 items-center justify-center">
                                 <CustomGraph
                                     data={dashboard.monthBookingData}
                                     title="Үйлчлүүлэгчидийн тоо/Өдөр/"
+                                    maxValue={dashboard.maxMonthBookingData}
                                 />
                             </View>
                         ) : null}
 
                         {dashboard.doctorAvgHour.length ? (
-                            <View className="flex-1 items-center justify-center -mt-4">
-                                {/* <SortableTable
-                                data={dashboard.doctorAvgHour}
-                                title="Эмч нарын хариу гаргалт"
-                                headers={[
-                                    "Нэр",
-                                    "Нийт Тоо",
-                                    "Энгийн хариу дундаж",
-                                    "72+ цагт гарсан хариуны тоо",
-                                    "Яаралтай хариуны тоо",
-                                    "Яаралтай хариуны дундаж хугацаа",
-                                    "Яаралтай 36+ цагт гарсан хариуны тоо",
-                                ]}
-                                keys={{
-                                    "Нийт Тоо": "cnt",
-                                    "Энгийн хариу дундаж": "avgHour",
-                                    "72+ цагт гарсан хариуны тоо": "cnt72",
-                                    "Яаралтай хариуны тоо": "cntUrgent",
-                                    "Яаралтай хариуны дундаж хугацаа":
-                                        "urgentAvg",
-                                    "Яаралтай 36+ цагт гарсан хариуны тоо":
-                                        "cntUrgent36",
-                                }}
-                            /> */}
+                            <View className="flex-1 mt-24items-center justify-center">
                                 <SortableList
                                     data={dashboard.doctorAvgHour}
                                     title="Эмч нарын хариу гаргалт"
@@ -177,57 +147,80 @@ export default function Dashboard() {
                             </View>
                         ) : null}
 
-                        {/* resp iig yanzlah */}
-                        {/* <View className="mt-4 flex-1 items-center justify-center">
-                            <CustomColumnChart
-                                data={dashboard.hourCustomerData}
-                                title="Үйлчлүүлэгчидийн тоо/Цаг/"
-                            />
-                        </View> */}
+                        {/* hourCustomerData */}
+                        {dashboard.hourCustomerData.length ? (
+                            <View className=" flex-1 w-[90vw] mt-2 items-center justify-center">
+                                <CustomGraph
+                                    data={dashboard.hourCustomerData}
+                                    title="Үйлчлүүлэгчидийн тоо /Цаг/"
+                                    maxValue={dashboard.maxHourCustomerData}
+                                />
+                            </View>
+                        ) : null}
 
-                        <>
-                            <ScrollView horizontal className="mx-2 -my-8">
-                                {/* amount iig has and solution same with the firtsh graph */}
-                                {weekDataTypeKeys.map((key, index) => (
-                                    <TouchableOpacity
-                                        className={`h-14 p-2 justify-center items-center my-4 mx-2 w-[26vw] ${
-                                            weekDataType == WeekDataType[key]
-                                                ? "border-b border-primary"
-                                                : ""
-                                        }`}
-                                        key={key}
-                                        onPress={() => {
-                                            toggleWeekDataType(
-                                                WeekDataType[key]
-                                            );
-                                        }}
-                                    >
-                                        <Text
-                                            className={`text-base ${
+                        {dashboard.weekAvgData.length ||
+                        dashboard.weekSumData.length ? (
+                            <View className="flex-1 mt-6">
+                                <View className="flex-row w-[90vw] justify-center bg-white-100 rounded-lg border border-gray-100 shadow-sm">
+                                    {weekDataTypeKeys.map((key, index) => (
+                                        <TouchableOpacity
+                                            className={`h-10 justify-center p-1 items-center w-[50%] ${
                                                 weekDataType ==
                                                 WeekDataType[key]
-                                                    ? "text-primary"
+                                                    ? ""
                                                     : ""
                                             }`}
+                                            key={key}
+                                            onPress={() => {
+                                                toggleWeekDataType(
+                                                    WeekDataType[key]
+                                                );
+                                            }}
                                         >
-                                            {WeekDataType[key]}
-                                        </Text>
-                                    </TouchableOpacity>
-                                ))}
-                            </ScrollView>
-                            {/* response iig bas salgah, mun label value bolgoh */}
-                            {/* <View className="mt-4 flex-1 items-center justify-center">
-                        <CustomColumnChart
-                                data={weekDataType == WeekDataType.WeekAvgCount }
-                                title="Үйлчлүүлэгчидийн тоо/Цаг/"
-                            />
-                        </View> */}
-                            {/* Table iin response uurchluh, type aar tusdaa array irdeg bolgoh */}
-                        </>
+                                            <Text
+                                                className={`text-base ${
+                                                    weekDataType ==
+                                                    WeekDataType[key]
+                                                        ? "text-primary"
+                                                        : ""
+                                                }`}
+                                            >
+                                                {WeekDataType[key]}
+                                            </Text>
+                                        </TouchableOpacity>
+                                    ))}
+                                </View>
+                                {weekDataType ==
+                                WeekDataType[weekDataTypeKeys[0]] ? (
+                                    <View className="flex-1 w-[90vw] items-center justify-center mt-2">
+                                        <CustomGraph
+                                            data={dashboard.weekAvgData}
+                                            title="Долоо хоног /дундаж/"
+                                            maxValue={dashboard.maxWeekAvgData}
+                                        />
+                                    </View>
+                                ) : (
+                                    <View className="flex-1 w-[90vw] items-center justify-center mt-2">
+                                        <CustomGraph
+                                            data={dashboard.weekSumData}
+                                            title="Долоо хоног дүнгийн график"
+                                            maxValue={dashboard.maxWeekSumData}
+                                        />
+                                    </View>
+                                )}
+                            </View>
+                        ) : null}
+                        {dashboard.weekBookingData.length ? (
+                            <View className="flex-1 w-[90vw] items-center justify-center mt-6">
+                                <CustomGraph
+                                    data={dashboard.weekBookingData}
+                                    title="7 хоногоор"
+                                    maxValue={dashboard.maxWeekBookingData}
+                                />
+                            </View>
+                        ) : null}
                     </View>
-                ) : (
-                    <View></View>
-                )}
+                ) : null}
             </ScrollView>
         </View>
     );

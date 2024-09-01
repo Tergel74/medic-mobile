@@ -7,11 +7,9 @@ import {
     Modal,
     TouchableWithoutFeedback,
     Platform,
-    Image,
 } from "react-native";
 import React, { useCallback, useRef, useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
-import { images } from "@/constants";
 
 type OptionItem = {
     id: string;

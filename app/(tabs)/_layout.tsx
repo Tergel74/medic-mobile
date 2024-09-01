@@ -93,13 +93,12 @@ export default function TabsLayout() {
                         marginLeft: -20,
                     },
                     headerStatusBarHeight: 50,
-                    // headerTitle: hospital.name,
                     headerTitle: (props) => (
                         <View className="w-[60vw] h-full relative items-center">
                             <MaterialIcons
                                 name="arrow-back-ios-new"
                                 size={12}
-                                color="black"
+                                color="forestgreen"
                                 style={{
                                     position: "absolute",
                                     left: 0,
@@ -133,7 +132,7 @@ export default function TabsLayout() {
                             <MaterialIcons
                                 name="arrow-forward-ios"
                                 size={12}
-                                color="black"
+                                color="forestgreen"
                                 style={{
                                     position: "absolute",
                                     right: 0,

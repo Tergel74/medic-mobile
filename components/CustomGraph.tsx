@@ -8,18 +8,22 @@ type CustomGraphProps = {
     data: any;
     title: string;
     containerStyle?: string;
+    maxValue: number;
 };
 
 export default function CustomGraph({
     data,
     title,
     containerStyle,
+    maxValue,
 }: CustomGraphProps) {
+    const { width } = Dimensions.get("window");
+    const chartWidth = width - 110;
     data.forEach((data) => {
         data.forEach((element) => {
             (element.dataPointText = element.value.toString()),
                 (element.labelTextStyle = {
-                    transform: [{ rotate: "-90deg" }, { translateX: -10 }],
+                    // transform: [{ rotate: "-90deg" }, { translateX: -10 }],
                     fontSize: 10,
                 }),
                 (element.textShiftY = -10);
@@ -27,11 +31,14 @@ export default function CustomGraph({
     });
     const [chartReady, setChartReady] = useState(false);
     const [chartData, setChartData] = useState(data);
+    const [chartSpacing, setChartSpacing] = useState(chartWidth / 7);
 
     useEffect(() => {
         const prepare = async () => {
             try {
                 setChartData(data);
+                data[0].length < 7 &&
+                    setChartSpacing(chartWidth / (data[0].length + 0.5));
             } catch (err) {
                 console.log(err);
             }
@@ -42,19 +49,15 @@ export default function CustomGraph({
         });
     }, [data, chartData]);
 
-    const { width } = Dimensions.get("window");
-    const chartWidth = width - 90;
-    const spacingWidth = chartWidth / 9;
     const chartColors = ["forestgreen", "orange", "dodgerblue", "peru"];
 
     return (
         <View
-            className={`justify-center items-center rounded-lg w-[90vw] h-[40vh] bg-white ${containerStyle}`}
-            // className={`justify-center items-center rounded-lg border border-gray-100 w-[94vw] h-[42vh] bg-white p-2 ${containerStyle}`}
+            className={`justify-center items-center rounded-lg w-full h-[38vh] bg-white p-2 ${containerStyle}`}
         >
             {chartReady && chartData.length ? (
-                <>
-                    <View className=" flex-row justify-between items-center flex-wrap w-full mb-4 ml-1">
+                <View className="">
+                    <View className=" flex-row justify-between items-center flex-wrap w-full mb-4 ml-1 px-2">
                         <Text className="text-base font-semibold">{title}</Text>
                         <View className="flex-row items-center justify-start h-6 space-x-2">
                             {chartData.length > 1 ? (
@@ -88,7 +91,7 @@ export default function CustomGraph({
                             )}
                         </View>
                     </View>
-                    <View className="w-full -ml-3 h-[80%]">
+                    <View className=" h-[80%]">
                         <LineChart
                             data={chartData[0]}
                             color1="forestgreen"
@@ -104,8 +107,13 @@ export default function CustomGraph({
                             startFillColor4="rgba(205, 133, 63, 0.2)"
                             // areaChart
                             width={chartWidth}
-                            spacing={spacingWidth}
-                            maxValue={110}
+                            spacing={chartSpacing}
+                            maxValue={
+                                maxValue +
+                                (maxValue.toString().length > 2
+                                    ? +maxValue.toString()[0] * 10
+                                    : 10)
+                            }
                             mostNegativeValue={0}
                             isAnimated
                             curved
@@ -120,7 +128,7 @@ export default function CustomGraph({
                             // textColor="black"
                         />
                     </View>
-                </>
+                </View>
             ) : (
                 <View className="justify-center items-center space-y-2">
                     <SimpleLineIcons name="drawer" size={60} color="gray" />

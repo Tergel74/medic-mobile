@@ -16,7 +16,7 @@ export default function DataView({
 }: DataViewProps) {
     return (
         <View
-            className={`bg-white-100 w-[44%] h-[8vh] mb-3 rounded-lg p-4 justify-center items-center flex-row ${containerStyle}`}
+            className={`bg-white w-[44%] h-[8vh] mb-3 rounded-lg p-4 justify-center items-center flex-row ${containerStyle}`}
         >
             <View className="w-12 h-12 bg-white rounded-lg items-center justify-center p-2 mr-3">
                 {icon}
