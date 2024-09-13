@@ -52,6 +52,8 @@ export default function SortableList({
     const sortDataAsc = () => {};
     const sortDataDesc = () => {};
 
+    const openSortModal = () => {};
+
     useEffect(() => {
         setListData(data);
     }, [data]);

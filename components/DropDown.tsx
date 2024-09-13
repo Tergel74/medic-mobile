@@ -11,17 +11,12 @@ import {
 import React, { useCallback, useRef, useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
 
-type OptionItem = {
-    id: string;
-    name: string;
-};
-
 interface DropDownProps {
-    data: OptionItem[];
-    onChange: (item: OptionItem) => void;
+    data: any[];
+    onChange: (item: any) => void;
     dropDownBtnStyle?: string;
     dropDownStyle?: string;
-    initialValue: OptionItem;
+    initialValue: any;
 }
 
 export default function DropDown({
@@ -45,7 +40,9 @@ export default function DropDown({
     const [top, setTop] = useState(0);
     const [left, setLeft] = useState(0);
 
-    const onSelect = useCallback((item: OptionItem) => {
+    const onSelect = useCallback((item) => {
+        console.log(item);
+
         onChange(item);
         setValue(item.name);
         setExpanded(false);
@@ -101,7 +98,7 @@ export default function DropDown({
                                         left,
                                     },
                                 ]}
-                                className={`absolute bg-white max-w-[44vw] p-2 rounded-lg max-h-[250px] border border-gray-100 ${dropDownStyle}`}
+                                className={`absolute bg-white max-w-[45vw] p-2 rounded-lg max-h-[250px] border border-gray-100 ${dropDownStyle}`}
                             >
                                 <FlatList
                                     keyExtractor={(item) => item.id}

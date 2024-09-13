@@ -11,6 +11,7 @@ import { router, SplashScreen } from "expo-router";
 import { getHospitals, getServiceType } from "@/api/repositories/repository";
 import Carousel from "react-native-reanimated-carousel";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import EvilIcons from "@expo/vector-icons/EvilIcons";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -83,7 +84,6 @@ export default function TabsLayout() {
         <GestureHandlerRootView onLayout={onLayoutRootView}>
             <Drawer
                 screenOptions={{
-                    // headerShown: false,
                     headerTintColor: "#097947",
                     headerTitleStyle: {
                         color: "#000000",
@@ -168,6 +168,26 @@ export default function TabsLayout() {
                         }) => (
                             <AntDesign
                                 name="dashboard"
+                                size={props.size}
+                                color={props.color}
+                            />
+                        ),
+                        drawerActiveBackgroundColor: "#84bca3",
+                        drawerActiveTintColor: "#097947",
+                    }}
+                />
+                <Drawer.Screen
+                    key={"booking"}
+                    name="booking"
+                    options={{
+                        drawerLabel: "Цаг захиалга",
+                        title: "Цаг захиалга",
+                        drawerIcon: (props: {
+                            color: string;
+                            size: number;
+                        }) => (
+                            <EvilIcons
+                                name="calendar"
                                 size={props.size}
                                 color={props.color}
                             />
