@@ -41,8 +41,6 @@ export default function DropDown({
     const [left, setLeft] = useState(0);
 
     const onSelect = useCallback((item) => {
-        console.log(item);
-
         onChange(item);
         setValue(item.name);
         setExpanded(false);

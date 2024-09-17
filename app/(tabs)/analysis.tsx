@@ -11,6 +11,7 @@ import {
     getDoctors,
 } from "@/api/repositories/repository";
 import SortableList from "@/components/SortableList";
+import ActionDataList from "@/components/ActionDataList";
 
 export default function Analysis() {
     const { user, hospital, setHospital, hospitals, serviceTypes } =
@@ -106,8 +107,12 @@ export default function Analysis() {
                     // Action(tsutslah)
                     // Action(zasah)
                     // Hariu avah utas
-                    <View className="items-center justify-center mt-4">
-                        <Text>Analysis data here</Text>
+                    <View className="items-center justify-center mt-4 flex-1">
+                        <ActionDataList
+                            title={`Шинжилгээ /${date}/`}
+                            data={analysis}
+                            role={user.role}
+                        />
                     </View>
                 ) : null}
             </ScrollView>

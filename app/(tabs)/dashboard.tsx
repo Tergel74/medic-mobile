@@ -115,7 +115,7 @@ export default function Dashboard() {
                         ) : null}
 
                         {dashboard.doctorAvgHour.length ? (
-                            <View className="flex-1 mt-24items-center justify-center">
+                            <View className="flex-1 mt-2 items-center justify-center">
                                 <SortableList
                                     data={dashboard.doctorAvgHour}
                                     title="Эмч нарын хариу гаргалт"
