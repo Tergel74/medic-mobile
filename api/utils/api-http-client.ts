@@ -1,4 +1,5 @@
 import { getStorageItem } from "@/lib/storage";
+import axios from "axios";
 
 const API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL;
 const MOBILE_API_BASE_URL = process.env.EXPO_PUBLIC_API_MOBILE_BASE_URL;
@@ -35,6 +36,27 @@ export async function post(endpoint: string, data: {}) {
 
         const responseData = await res.json();
         return responseData;
+    } catch (err) {
+        console.error("Error posting data:", err);
+        throw err;
+    }
+}
+export async function postFormData(endpoint: string, data: {}) {
+    try {
+        const token = await getStorageItem("token");
+        const res = await axios.post(
+            // `http://192.168.1.39:5012/api/admin${endpoint}`,
+            `${API_BASE_URL}${endpoint}`,
+            data,
+            {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+
+        return res;
     } catch (err) {
         console.error("Error posting data:", err);
         throw err;

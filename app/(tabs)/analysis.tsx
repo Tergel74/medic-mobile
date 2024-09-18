@@ -12,13 +12,13 @@ import {
 } from "@/api/repositories/repository";
 import SortableList from "@/components/SortableList";
 import ActionDataList from "@/components/ActionDataList";
+import { SimpleLineIcons } from "@expo/vector-icons";
 
 export default function Analysis() {
     const { user, hospital, setHospital, hospitals, serviceTypes } =
         useGlobalContext();
 
     const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
-    const [device, setDevice] = useState();
     const [doctors, setDoctors] = useState();
     const [ceItems, setCeItems] = useState();
     const [deviceModels, setDeviceModels] = useState(null);
@@ -60,7 +60,7 @@ export default function Analysis() {
     useEffect(() => {
         getStartingData();
         getData();
-    }, [date, device, hospital]);
+    }, [date, hospital]);
 
     return (
         <View className="h-full py-2 px-1 bg-white">
@@ -72,9 +72,9 @@ export default function Analysis() {
                             onChange={(date) => {
                                 setDate(date);
                             }}
-                            pickerBtnStyle="w-[45vw] mr-2"
+                            pickerBtnStyle="w-[90vw] mr-2"
                         />
-                        <DropDown
+                        {/* <DropDown
                             data={deviceModels}
                             onChange={(device) => {
                                 setDeviceModel(device);
@@ -82,10 +82,10 @@ export default function Analysis() {
                             initialValue={deviceModels[1]}
                             dropDownBtnStyle="w-[45vw]"
                             dropDownStyle="min-w-[45vw]"
-                        />
+                        /> */}
                     </View>
                 ) : null}
-                {analysis ? (
+                {analysis && analysis.rows.length ? (
                     // Initial View:
                     // number
                     // name
@@ -110,11 +110,18 @@ export default function Analysis() {
                     <View className="items-center justify-center mt-4 flex-1">
                         <ActionDataList
                             title={`Шинжилгээ /${date}/`}
-                            data={analysis}
+                            data={analysis.rows}
                             role={user.role}
                         />
                     </View>
-                ) : null}
+                ) : (
+                    <View className="justify-center items-center space-y-2 mt-10">
+                        <SimpleLineIcons name="drawer" size={60} color="gray" />
+                        <Text className="text-gray-500 text-base">
+                            Мэдээлэл байхгүй байна
+                        </Text>
+                    </View>
+                )}
             </ScrollView>
         </View>
     );

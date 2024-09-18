@@ -1,4 +1,4 @@
-import { get, getMobile } from "../utils/api-http-client";
+import { get, getMobile, post, postFormData } from "../utils/api-http-client";
 
 export async function getDashboard(
     date: string,
@@ -90,6 +90,38 @@ export async function getAnalysis(
     try {
         const res = await get(
             `/customerbooking?offset=0&limit=200&startdate=${startDate}&enddate=${endDate}&servicetype=${serviceType}&status=-1&technician=${technicianId}&hospital=${hospitalId}&searchText=`
+        );
+
+        return res;
+    } catch (err) {
+        console.log(err);
+        return err;
+    }
+}
+
+export async function getBooking(
+    startDate: string,
+    endDate: string,
+    serviceType: number,
+    hospitalId: number
+) {
+    try {
+        const res = await get(
+            `/prebooking?startdate=${startDate}&enddate=${endDate}&servicetype=${serviceType}&status=-1&hospital=${hospitalId}`
+        );
+
+        return res;
+    } catch (err) {
+        console.log(err);
+        return err;
+    }
+}
+
+export async function postImage(analysisId: string, formData: any) {
+    try {
+        const res = await postFormData(
+            `/booking/image/${analysisId}`,
+            formData
         );
 
         return res;
