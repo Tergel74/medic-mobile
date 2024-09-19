@@ -41,6 +41,34 @@ export async function post(endpoint: string, data: {}) {
         throw err;
     }
 }
+export async function del(endpoint: string, data: {}) {
+    try {
+        const token = await getStorageItem("token");
+        await axios.delete(`${API_BASE_URL}${endpoint}`, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        });
+        // await fetch(`http://192.168.1.39:5012/api/admin${endpoint}`, {
+        //     method: "DELETE",
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //         Authorization: `Bearer ${token}`,
+        //     },
+        //     body: JSON.stringify(data),
+        // });
+
+        // if (res) {
+        //     const responseData = await res.json();
+        //     return responseData;
+        // }
+    } catch (err) {
+        console.error("Error posting data:", err);
+        throw err;
+    }
+}
 export async function postFormData(endpoint: string, data: {}) {
     try {
         const token = await getStorageItem("token");

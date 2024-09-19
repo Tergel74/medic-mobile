@@ -1,4 +1,10 @@
-import { get, getMobile, post, postFormData } from "../utils/api-http-client";
+import {
+    get,
+    getMobile,
+    post,
+    postFormData,
+    del,
+} from "../utils/api-http-client";
 
 export async function getDashboard(
     date: string,
@@ -117,12 +123,32 @@ export async function getBooking(
     }
 }
 
-export async function postImage(analysisId: string, formData: any) {
+export async function postImages(bookingId: string, formData: any) {
     try {
-        const res = await postFormData(
-            `/booking/image/${analysisId}`,
-            formData
-        );
+        const res = await postFormData(`/booking/image/${bookingId}`, formData);
+
+        return res;
+    } catch (err) {
+        console.log(err);
+        return err;
+    }
+}
+export async function getImages(bookingId: string) {
+    try {
+        const res = await get(`/booking/images/${bookingId}`);
+
+        return res;
+    } catch (err) {
+        console.log(err);
+        return err;
+    }
+}
+
+export async function deleteImage(imageId: number) {
+    try {
+        const res = await del(`/booking/image`, {
+            id: imageId,
+        });
 
         return res;
     } catch (err) {

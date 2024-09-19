@@ -2,16 +2,22 @@ import * as ImagePicker from "expo-image-picker";
 import React from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { postImage } from "@/api/repositories/repository";
+import { postImages } from "@/api/repositories/repository";
 
 type CustomImagePickerProps = {
     bookingId: string;
     iconColor: string;
+    btnStyle?: string;
+    iconSize: number;
+    onUpload: any;
 };
 
 export default function CustomImagePicker({
     bookingId,
     iconColor,
+    btnStyle,
+    iconSize,
+    onUpload,
 }: CustomImagePickerProps) {
     const pickImageAsync = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -37,7 +43,8 @@ export default function CustomImagePicker({
                     console.log(err);
                     alert("There was a problem with uploading the image!");
                 } finally {
-                    const imageResp = await postImage(bookingId, form);
+                    const imageResp = await postImages(bookingId, form);
+                    onUpload(imageResp);
                 }
             }
         }
@@ -45,9 +52,13 @@ export default function CustomImagePicker({
     return (
         <TouchableOpacity
             onPress={pickImageAsync}
-            className="w-8 h-8 border-2 border-primary justify-center items-center rounded-md"
+            className={`w-14 h-14 border-2 border-primary justify-center items-center rounded-md ${btnStyle}`}
         >
-            <MaterialIcons name="insert-photo" size={24} color={iconColor} />
+            <MaterialIcons
+                name="insert-photo"
+                size={iconSize}
+                color={iconColor}
+            />
         </TouchableOpacity>
     );
 }
