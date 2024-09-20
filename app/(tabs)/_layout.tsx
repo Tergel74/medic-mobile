@@ -84,7 +84,7 @@ export default function TabsLayout() {
         <GestureHandlerRootView onLayout={onLayoutRootView}>
             <Drawer
                 screenOptions={{
-                    headerTintColor: "#097947",
+                    headerTintColor: "#228b22",
                     headerTitleStyle: {
                         color: "#000000",
                     },
@@ -172,8 +172,8 @@ export default function TabsLayout() {
                                 color={props.color}
                             />
                         ),
-                        drawerActiveBackgroundColor: "#84bca3",
-                        drawerActiveTintColor: "#097947",
+                        drawerActiveBackgroundColor: "#a6d0a6",
+                        drawerActiveTintColor: "#228b22",
                     }}
                 />
                 <Drawer.Screen
@@ -192,8 +192,8 @@ export default function TabsLayout() {
                                 color={props.color}
                             />
                         ),
-                        drawerActiveBackgroundColor: "#84bca3",
-                        drawerActiveTintColor: "#097947",
+                        drawerActiveBackgroundColor: "#a6d0a6",
+                        drawerActiveTintColor: "#228b22",
                     }}
                 />
                 <Drawer.Screen
@@ -212,8 +212,8 @@ export default function TabsLayout() {
                                 color={props.color}
                             />
                         ),
-                        drawerActiveBackgroundColor: "#84bca3",
-                        drawerActiveTintColor: "#097947",
+                        drawerActiveBackgroundColor: "#a6d0a6",
+                        drawerActiveTintColor: "#228b22",
                     }}
                 />
             </Drawer>

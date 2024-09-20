@@ -8,7 +8,7 @@ import {
     TouchableWithoutFeedback,
     Platform,
 } from "react-native";
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
 
 interface DropDownProps {
@@ -37,18 +37,25 @@ export default function DropDown({
 
     const buttonRef = useRef<View>(null);
 
-    const [top, setTop] = useState(0);
-    const [left, setLeft] = useState(0);
+    const [top, setTop] = useState<number>(0);
+    const [left, setLeft] = useState<number>(0);
+
+    var t = 0;
+    var l = 0;
 
     const onSelect = useCallback((item) => {
         onChange(item);
         setValue(item.name);
         setExpanded(false);
     }, []);
+    console.log(initialValue);
+
     return (
         <View
             ref={buttonRef}
             onLayout={(event) => {
+                console.log("now");
+
                 // const layout = event.nativeEvent.layout;
                 // const topOffset = layout.y;
                 // const leftOffset = layout.x;
@@ -66,7 +73,11 @@ export default function DropDown({
                         y + height + (Platform.OS === "android" ? 0 : 3);
 
                     setTop(finalTop);
+                    console.log(y);
+
+                    t = finalTop;
                     setLeft(x);
+                    l = x;
                 });
             }}
         >

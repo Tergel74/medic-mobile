@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
 import { LineChart } from "react-native-gifted-charts";
 import { transform } from "@babel/core";
+import NoData from "./NoData";
 
 type CustomGraphProps = {
     data: any;
@@ -130,12 +131,7 @@ export default function CustomGraph({
                     </View>
                 </View>
             ) : (
-                <View className="justify-center items-center space-y-2">
-                    <SimpleLineIcons name="drawer" size={60} color="gray" />
-                    <Text className="text-gray-500 text-base">
-                        Мэдээлэл байхгүй байна
-                    </Text>
-                </View>
+                <NoData />
             )}
         </View>
     );

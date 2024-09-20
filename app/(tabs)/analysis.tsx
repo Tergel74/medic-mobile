@@ -13,6 +13,7 @@ import {
 import SortableList from "@/components/SortableList";
 import ActionDataList from "@/components/ActionDataList";
 import { SimpleLineIcons } from "@expo/vector-icons";
+import NoData from "@/components/NoData";
 
 export default function Analysis() {
     const { user, hospital, setHospital, hospitals, serviceTypes } =
@@ -72,7 +73,7 @@ export default function Analysis() {
                             onChange={(date) => {
                                 setDate(date);
                             }}
-                            pickerBtnStyle="w-[90vw] mr-2"
+                            pickerBtnStyle="w-[92vw]"
                         />
                         {/* <DropDown
                             data={deviceModels}
@@ -86,41 +87,18 @@ export default function Analysis() {
                     </View>
                 ) : null}
                 {analysis && analysis.rows.length ? (
-                    // Initial View:
-                    // number
-                    // name
-                    // register id
-                    // age
-                    // picture
-                    // device
-                    // shinjluuleh erhten
-                    // ognoo
-
-                    // Expanded View:
-                    // Initial View
-                    // zoviur
-                    // tailbar
-                    // emch/technich
-                    // zuvluh emch
-                    // status (garsan eseh)
-                    // garsan tsag
-                    // Action(tsutslah)
-                    // Action(zasah)
-                    // Hariu avah utas
                     <View className="items-center justify-center mt-4 flex-1">
                         <ActionDataList
                             title={`Шинжилгээ /${date}/`}
                             data={analysis.rows}
                             role={user.role}
+                            onRefresh={() => {
+                                getData();
+                            }}
                         />
                     </View>
                 ) : (
-                    <View className="justify-center items-center space-y-2 mt-10">
-                        <SimpleLineIcons name="drawer" size={60} color="gray" />
-                        <Text className="text-gray-500 text-base">
-                            Мэдээлэл байхгүй байна
-                        </Text>
-                    </View>
+                    <NoData />
                 )}
             </ScrollView>
         </View>

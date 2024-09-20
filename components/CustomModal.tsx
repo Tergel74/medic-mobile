@@ -3,12 +3,28 @@ import React from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { MaterialIcons } from "@expo/vector-icons";
 
-export default function CustomModal({ isVisible, children, onClose }) {
+type CustomModalProps = {
+    isVisible: boolean;
+    children: any;
+    onClose: any;
+    modalStyle?: string;
+    title: string;
+};
+
+export default function CustomModal({
+    isVisible,
+    children,
+    onClose,
+    modalStyle,
+    title,
+}: CustomModalProps) {
     return (
         <Modal animationType="slide" transparent={true} visible={isVisible}>
-            <View className="h-[30%] bg-white w-full rounded-t-3xl items-center absolute bottom-0">
-                <View className="h-[25%] w-full p-4 flex-row items-center justify-between">
-                    <Text className="text-lg">Зураг сонгох</Text>
+            <View
+                className={`h-[28%] bg-white w-full rounded-t-3xl items-center absolute bottom-0 border border-t-2 border-primary ${modalStyle}`}
+            >
+                <View className="h-14 w-full p-4 flex-row items-center justify-between">
+                    <Text className="text-base">{title}</Text>
                     <TouchableOpacity onPress={onClose}>
                         <MaterialIcons
                             name="close"

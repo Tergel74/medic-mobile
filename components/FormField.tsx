@@ -7,8 +7,10 @@ type FormFieldProps = {
     value: string;
     placeHolder?: string;
     handleChangeText: any;
-    formStyles: string;
+    formStyles?: string;
     keyboardType?: string;
+    inputStyles?: string;
+    titleStyles?: string;
 };
 
 const FormField = ({
@@ -18,16 +20,22 @@ const FormField = ({
     handleChangeText,
     formStyles,
     keyboardType,
+    inputStyles,
+    titleStyles,
 }: FormFieldProps) => {
     const [showPassword, setShowPassword] = useState(false);
 
     return (
-        <View className={`space-y-2 ${formStyles}`}>
-            {title && <Text className="text-base">{title}</Text>}
+        <View className={`space-y-1 ${formStyles}`}>
+            {title && (
+                <Text className={`text-base ${titleStyles}`}>{title}</Text>
+            )}
 
-            <View className="border border-gray-100 w-full h-16 px-4 rounded-lg focus:border-primary items-center flex-row">
+            <View
+                className={`border border-gray-100 w-full h-16 px-4 rounded-lg focus:border-primary items-center flex-row ${inputStyles}`}
+            >
                 <TextInput
-                    className="flex-1 text-base"
+                    className="flex-1 text-base justify-center items-center"
                     value={value}
                     placeholder={placeHolder}
                     placeholderTextColor="#808080"

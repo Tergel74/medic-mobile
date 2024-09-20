@@ -8,6 +8,7 @@ import {
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { SimpleLineIcons } from "@expo/vector-icons";
+import NoData from "./NoData";
 
 type SortableTableProps = {
     containerStyle?: string;
@@ -178,12 +179,7 @@ export default function SortableTable({
                     </ScrollView>
                 </View>
             ) : (
-                <View className="justify-center items-center space-y-2">
-                    <SimpleLineIcons name="drawer" size={60} color="gray" />
-                    <Text className="text-gray-500 text-base">
-                        Мэдээлэл байхгүй байна
-                    </Text>
-                </View>
+                <NoData />
             )}
         </View>
     );

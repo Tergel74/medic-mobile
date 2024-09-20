@@ -5,6 +5,7 @@ import { useGlobalContext } from "@/context/GlobalProvider";
 import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
 import { CustomSegmentedControl } from "./CustomSegmentedControl";
 import SegmentedControl from "@react-native-segmented-control/segmented-control";
+import NoData from "./NoData";
 
 type CustomColumnChartProps = {
     data: any;
@@ -107,12 +108,7 @@ const CustomColumnChart = ({
                     />
                 </>
             ) : (
-                <View className="justify-center items-center space-y-2">
-                    <SimpleLineIcons name="drawer" size={60} color="gray" />
-                    <Text className="text-gray-500 text-base">
-                        Мэдээлэл байхгүй байна
-                    </Text>
-                </View>
+                <NoData />
             )}
         </View>
     );

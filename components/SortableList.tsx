@@ -11,6 +11,7 @@ import {
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { SimpleLineIcons } from "@expo/vector-icons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import NoData from "./NoData";
 
 type SortableListProps = {
     containerStyle?: string;
@@ -232,12 +233,7 @@ export default function SortableList({
                     />
                 </View>
             ) : (
-                <View className="justify-center items-center space-y-2">
-                    <SimpleLineIcons name="drawer" size={60} color="gray" />
-                    <Text className="text-gray-500 text-base">
-                        Мэдээлэл байхгүй байна
-                    </Text>
-                </View>
+                <NoData />
             )}
         </View>
     );
