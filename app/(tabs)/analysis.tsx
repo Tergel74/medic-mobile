@@ -10,9 +10,7 @@ import {
     getDeviceModels,
     getDoctors,
 } from "@/api/repositories/repository";
-import SortableList from "@/components/SortableList";
 import ActionDataList from "@/components/ActionDataList";
-import { SimpleLineIcons } from "@expo/vector-icons";
 import NoData from "@/components/NoData";
 
 export default function Analysis() {

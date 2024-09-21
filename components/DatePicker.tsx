@@ -26,6 +26,8 @@ export default function DatePicker({
     };
 
     const handleConfirm = (date) => {
+        console.log(date);
+
         onChange(date.toISOString().split("T")[0]);
         setDate(date);
         hideDatePicker();

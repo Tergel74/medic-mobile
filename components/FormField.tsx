@@ -32,10 +32,10 @@ const FormField = ({
             )}
 
             <View
-                className={`border border-gray-100 w-full h-16 px-4 rounded-lg focus:border-primary items-center flex-row ${inputStyles}`}
+                className={`border border-gray-100 w-full h-16 px-3 rounded-lg focus:border-primary items-center justify-start flex-row ${inputStyles}`}
             >
                 <TextInput
-                    className="flex-1 text-base justify-center items-center"
+                    className="flex-1 text-base justify-center pb-1 items-center"
                     value={value}
                     placeholder={placeHolder}
                     placeholderTextColor="#808080"

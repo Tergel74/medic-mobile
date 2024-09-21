@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, StatusBar } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import React, { useCallback, useEffect, useState } from "react";
 import { Drawer } from "expo-router/drawer";
@@ -81,142 +81,145 @@ export default function TabsLayout() {
     };
 
     return (
-        <GestureHandlerRootView onLayout={onLayoutRootView}>
-            <Drawer
-                screenOptions={{
-                    headerTintColor: "#228b22",
-                    headerTitleStyle: {
-                        color: "#000000",
-                    },
-                    drawerHideStatusBarOnOpen: true,
-                    drawerLabelStyle: {
-                        marginLeft: -20,
-                    },
-                    headerStatusBarHeight: 50,
-                    headerTitle: (props) => (
-                        <>
-                            {user.role == "Админ" ? (
-                                <View className="w-[60vw] h-full relative items-center">
-                                    <MaterialIcons
-                                        name="arrow-back-ios-new"
-                                        size={12}
-                                        color="forestgreen"
-                                        style={{
-                                            position: "absolute",
-                                            left: 0,
-                                            top: "36%",
-                                        }}
-                                    />
-                                    <Carousel
-                                        loop
-                                        width={200}
-                                        height={30}
-                                        data={hospitals}
-                                        scrollAnimationDuration={1000}
-                                        defaultIndex={hospital.id - 1}
-                                        onSnapToItem={(index) =>
-                                            setHospital(hospitals[index])
-                                        }
-                                        renderItem={({ index }) => (
-                                            <View className="justify-center items-center flex-1">
-                                                <Text className="font-semibold text-lg">
-                                                    {hospitals[index].name}
-                                                </Text>
-                                            </View>
-                                        )}
-                                        style={{
-                                            height: "100%",
-                                            width: 200,
-                                            justifyContent: "center",
-                                            alignItems: "center",
-                                        }}
-                                    />
-                                    <MaterialIcons
-                                        name="arrow-forward-ios"
-                                        size={12}
-                                        color="forestgreen"
-                                        style={{
-                                            position: "absolute",
-                                            right: 0,
-                                            top: "36%",
-                                        }}
-                                    />
-                                </View>
-                            ) : (
-                                <View className="justify-center items-center flex-1">
-                                    <Text className="font-semibold text-lg">
-                                        {hospital.name}
-                                    </Text>
-                                </View>
-                            )}
-                        </>
-                    ),
-                }}
-                drawerContent={(props) =>
-                    CustomDrawerContent({ props, signOut, user })
-                }
-            >
-                <Drawer.Screen
-                    key={"dashboard"}
-                    name="dashboard"
-                    options={{
-                        drawerLabel: "Хянах самбар",
-                        title: "Хянах самбар",
-                        drawerIcon: (props: {
-                            color: string;
-                            size: number;
-                        }) => (
-                            <AntDesign
-                                name="dashboard"
-                                size={props.size}
-                                color={props.color}
-                            />
+        <>
+            <StatusBar barStyle="dark-content" />
+            <GestureHandlerRootView onLayout={onLayoutRootView}>
+                <Drawer
+                    screenOptions={{
+                        headerTintColor: "#228b22",
+                        headerTitleStyle: {
+                            color: "#000000",
+                        },
+                        drawerHideStatusBarOnOpen: true,
+                        drawerLabelStyle: {
+                            marginLeft: -20,
+                        },
+                        headerStatusBarHeight: 50,
+                        headerTitle: (props) => (
+                            <>
+                                {user.role == "Админ" ? (
+                                    <View className="w-[60vw] h-full relative items-center">
+                                        <MaterialIcons
+                                            name="arrow-back-ios-new"
+                                            size={12}
+                                            color="forestgreen"
+                                            style={{
+                                                position: "absolute",
+                                                left: 0,
+                                                top: "36%",
+                                            }}
+                                        />
+                                        <Carousel
+                                            loop
+                                            width={200}
+                                            height={30}
+                                            data={hospitals}
+                                            scrollAnimationDuration={1000}
+                                            defaultIndex={hospital.id - 1}
+                                            onSnapToItem={(index) =>
+                                                setHospital(hospitals[index])
+                                            }
+                                            renderItem={({ index }) => (
+                                                <View className="justify-center items-center flex-1">
+                                                    <Text className="font-semibold text-lg">
+                                                        {hospitals[index].name}
+                                                    </Text>
+                                                </View>
+                                            )}
+                                            style={{
+                                                height: "100%",
+                                                width: 200,
+                                                justifyContent: "center",
+                                                alignItems: "center",
+                                            }}
+                                        />
+                                        <MaterialIcons
+                                            name="arrow-forward-ios"
+                                            size={12}
+                                            color="forestgreen"
+                                            style={{
+                                                position: "absolute",
+                                                right: 0,
+                                                top: "36%",
+                                            }}
+                                        />
+                                    </View>
+                                ) : (
+                                    <View className="justify-center items-center flex-1">
+                                        <Text className="font-semibold text-lg">
+                                            {hospital.name}
+                                        </Text>
+                                    </View>
+                                )}
+                            </>
                         ),
-                        drawerActiveBackgroundColor: "#a6d0a6",
-                        drawerActiveTintColor: "#228b22",
                     }}
-                />
-                <Drawer.Screen
-                    key={"booking"}
-                    name="booking"
-                    options={{
-                        drawerLabel: "Цаг захиалга",
-                        title: "Цаг захиалга",
-                        drawerIcon: (props: {
-                            color: string;
-                            size: number;
-                        }) => (
-                            <EvilIcons
-                                name="calendar"
-                                size={props.size}
-                                color={props.color}
-                            />
-                        ),
-                        drawerActiveBackgroundColor: "#a6d0a6",
-                        drawerActiveTintColor: "#228b22",
-                    }}
-                />
-                <Drawer.Screen
-                    key={"analysis"}
-                    name="analysis"
-                    options={{
-                        drawerLabel: "Шинжилгээ",
-                        title: "Шинжилгээ",
-                        drawerIcon: (props: {
-                            color: string;
-                            size: number;
-                        }) => (
-                            <Ionicons
-                                name="analytics"
-                                size={props.size}
-                                color={props.color}
-                            />
-                        ),
-                        drawerActiveBackgroundColor: "#a6d0a6",
-                        drawerActiveTintColor: "#228b22",
-                    }}
-                />
-            </Drawer>
-        </GestureHandlerRootView>
+                    drawerContent={(props) =>
+                        CustomDrawerContent({ props, signOut, user })
+                    }
+                >
+                    <Drawer.Screen
+                        key={"dashboard"}
+                        name="dashboard"
+                        options={{
+                            drawerLabel: "Хянах самбар",
+                            title: "Хянах самбар",
+                            drawerIcon: (props: {
+                                color: string;
+                                size: number;
+                            }) => (
+                                <AntDesign
+                                    name="dashboard"
+                                    size={props.size}
+                                    color={props.color}
+                                />
+                            ),
+                            drawerActiveBackgroundColor: "#a6d0a6",
+                            drawerActiveTintColor: "#228b22",
+                        }}
+                    />
+                    <Drawer.Screen
+                        key={"booking"}
+                        name="booking"
+                        options={{
+                            drawerLabel: "Цаг захиалга",
+                            title: "Цаг захиалга",
+                            drawerIcon: (props: {
+                                color: string;
+                                size: number;
+                            }) => (
+                                <EvilIcons
+                                    name="calendar"
+                                    size={props.size}
+                                    color={props.color}
+                                />
+                            ),
+                            drawerActiveBackgroundColor: "#a6d0a6",
+                            drawerActiveTintColor: "#228b22",
+                        }}
+                    />
+                    <Drawer.Screen
+                        key={"analysis"}
+                        name="analysis"
+                        options={{
+                            drawerLabel: "Шинжилгээ",
+                            title: "Шинжилгээ",
+                            drawerIcon: (props: {
+                                color: string;
+                                size: number;
+                            }) => (
+                                <Ionicons
+                                    name="analytics"
+                                    size={props.size}
+                                    color={props.color}
+                                />
+                            ),
+                            drawerActiveBackgroundColor: "#a6d0a6",
+                            drawerActiveTintColor: "#228b22",
+                        }}
+                    />
+                </Drawer>
+            </GestureHandlerRootView>
+        </>
     );
 }

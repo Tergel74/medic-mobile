@@ -8,12 +8,15 @@ export async function get(endpoint: string) {
     try {
         const token = await getStorageItem("token");
 
-        const res = await fetch(`${API_BASE_URL}${endpoint}`, {
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-            },
-        });
+        const res = await fetch(
+            `http://192.168.1.39:5012/api/admin${endpoint}`,
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
         const responseData = await res.json();
 
         return responseData;

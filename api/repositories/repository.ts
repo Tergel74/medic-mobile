@@ -85,6 +85,16 @@ export async function getDeviceModels(
         return err;
     }
 }
+export async function getHospitalServices(hospitalId: number) {
+    try {
+        const res = await get(`/service?hospital=${hospitalId}`);
+
+        return res;
+    } catch (err) {
+        console.log(err);
+        return err;
+    }
+}
 
 export async function getAnalysis(
     startDate: string,
@@ -149,6 +159,51 @@ export async function deleteImage(imageId: number) {
         const res = await del(`/booking/image`, {
             id: imageId,
         });
+
+        return res;
+    } catch (err) {
+        console.log(err);
+        return err;
+    }
+}
+
+export async function findByRegNo(
+    regNo: string,
+    hospitalId: number,
+    serviceType: number
+) {
+    try {
+        const res = await get(
+            `/prebooking/find/${regNo}?hospitalId=${hospitalId}&servicetype=${serviceType}`
+        );
+
+        return res;
+    } catch (err) {
+        console.log(err);
+        return err;
+    }
+}
+
+export async function findByBookingId(
+    bookingId: string,
+    hospitalId: number,
+    serviceType: number
+) {
+    try {
+        const res = await get(
+            `/prebooking/findbyid/${bookingId}?hospitalId=${hospitalId}&servicetype=${serviceType}`
+        );
+
+        return res;
+    } catch (err) {
+        console.log(err);
+        return err;
+    }
+}
+
+export async function saveCustomerForm(data) {
+    try {
+        const res = await post(`/customerbooking`, data);
 
         return res;
     } catch (err) {

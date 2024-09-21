@@ -83,7 +83,7 @@ export default function Dashboard() {
                         }}
                         initialValue={initialServiceType}
                         dropDownBtnStyle="w-[44vw]"
-                        dropDownStyle="min-w-[44vw]"
+                        dropDownStyle="max-w-[44vw]"
                     />
                 </View>
                 {dashboard ? (

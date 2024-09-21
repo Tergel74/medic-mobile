@@ -35,58 +35,36 @@ export default function DropDown({
 
     const [value, setValue] = useState(initialValue.name);
 
-    const buttonRef = useRef<View>(null);
+    const buttonRef = useRef<TouchableOpacity>(null);
 
     const [top, setTop] = useState<number>(0);
     const [left, setLeft] = useState<number>(0);
-
-    var t = 0;
-    var l = 0;
 
     const onSelect = useCallback((item) => {
         onChange(item);
         setValue(item.name);
         setExpanded(false);
     }, []);
-    console.log(initialValue);
 
     return (
-        <View
-            ref={buttonRef}
-            onLayout={(event) => {
-                console.log("now");
-
-                // const layout = event.nativeEvent.layout;
-                // const topOffset = layout.y;
-                // const leftOffset = layout.x;
-                // const heightOfComponent = layout.height;
-
-                // const finalTop =
-                //     topOffset +
-                //     heightOfComponent +
-                //     (Platform.OS === "android" ? -32 : 3);
-
-                // setTop(finalTop);
-                // setLeft(leftOffset);
-                event.currentTarget.measureInWindow((x, y, width, height) => {
-                    const finalTop =
-                        y + height + (Platform.OS === "android" ? 0 : 3);
-
-                    setTop(finalTop);
-                    console.log(y);
-
-                    t = finalTop;
-                    setLeft(x);
-                    l = x;
-                });
-            }}
-        >
+        <View>
             <TouchableOpacity
+                ref={buttonRef}
                 className={`justify-between bg-white flex-row w-[40vw] items-center px-3 rounded-lg h-10 border shadow-sm ${dropDownBtnStyle} ${
                     expanded ? "border-primary" : "border-gray-100"
                 }`}
                 activeOpacity={0.8}
-                onPress={toggleExpanded}
+                onPress={() => {
+                    buttonRef.current.measureInWindow((x, y, width, height) => {
+                        const finalTop =
+                            y + height + (Platform.OS === "android" ? 0 : 3);
+
+                        setTop(finalTop);
+
+                        setLeft(x);
+                    });
+                    toggleExpanded();
+                }}
             >
                 <View className="w-[80%]">
                     <Text className="text-base">{value}</Text>
@@ -107,7 +85,7 @@ export default function DropDown({
                                         left,
                                     },
                                 ]}
-                                className={`absolute bg-white max-w-[45vw] p-2 rounded-lg max-h-[250px] border border-gray-100 ${dropDownStyle}`}
+                                className={`absolute bg-white max-w-[45vw] p-2 rounded-lg max-h-36 border border-gray-100 ${dropDownStyle}`}
                             >
                                 <FlatList
                                     keyExtractor={(item) => item.id}
