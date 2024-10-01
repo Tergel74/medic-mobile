@@ -122,7 +122,7 @@ export async function getBooking(
     hospitalId: number
 ) {
     try {
-        const res = await get(
+        const res = await getMobile(
             `/prebooking?startdate=${startDate}&enddate=${endDate}&servicetype=${serviceType}&status=-1&hospital=${hospitalId}`
         );
 

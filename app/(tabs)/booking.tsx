@@ -25,9 +25,13 @@ export default function Booking() {
     //     name: "Бүгд",
     // };
     // const [service, setService] = useState(initialServiceType);
+    const initialCeItem = {
+        id: "-2",
+        name: "",
+    };
     const [services, setServices] = useState([]);
     const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
-    const [ceItems, setCeItems] = useState();
+    const [ceItems, setCeItems] = useState([initialCeItem]);
     const [deviceModels, setDeviceModels] = useState(null);
     // const [bookingDate, setBookingDate] = useState(new Date().toISOString());
     // const [bookingDateTime, setBookingDateTime] = useState<Date>();
@@ -112,8 +116,8 @@ export default function Booking() {
     const getStartingData = async () => {
         const services = await getHospitalServices(hospital.id);
         setServices(services);
-        const ceItems = await getCeItems();
-        setCeItems(ceItems);
+        const ce = await getCeItems();
+        setCeItems(ce);
         const deviceModels = await getDeviceModels(hospital.id, 2);
         setDeviceModels(deviceModels);
         setCustomerDeviceModel(deviceModels[0]);
@@ -169,25 +173,40 @@ export default function Booking() {
     };
 
     const submitCustomerForm = async () => {
+        bookingInfo.currentDate = new Date();
+
         if (customerCe) {
             bookingInfo.isCe = true;
             bookingInfo.ceitemid = customerCe.id;
-            bookingInfo.ceGram = customerForm.ceiAmount;
+            bookingInfo.ceGram = +customerForm.ceiAmount;
         }
         if (customerForm.descr.length > 0) {
             bookingInfo.painful = customerForm.descr;
         }
-        bookingInfo.deviceId = customerDeviceModel.id;
-        console.log(bookingInfo);
+        if (customerDeviceModel) {
+            bookingInfo.deviceId = customerDeviceModel.id;
+        }
+        // if (customerCe) {
+        //     bookData.isCe = true;
+        //     bookData.ceitemid = customerCe.id;
+        //     bookData.ceGram = +customerForm.ceiAmount;
+        // }
+        // if (customerForm.descr.length > 0) {
+        //     bookData.painful = customerForm.descr;
+        // }
+        // if (customerDeviceModel) {
+        //     bookingInfo.deviceId = customerDeviceModel.id;
+        // }
 
-        const res = await saveCustomerForm({
+        await saveCustomerForm({
             bookingData: bookingInfo,
             customerData: customerInfo,
+        }).then(async (res) => {
+            if (res) {
+                onModalClose();
+                await getData();
+            }
         });
-        if (res) {
-            setFormOpen(false);
-            await getData();
-        }
     };
 
     useEffect(() => {
@@ -223,7 +242,7 @@ export default function Booking() {
                                         onChange={(e) => {
                                             setCustomerCe(e);
                                         }}
-                                        initialValue={ceItems[0]}
+                                        initialValue={initialCeItem}
                                         dropDownBtnStyle="w-[33vw] h-8 mt-1 mr-2 shadow-none"
                                         dropDownStyle="max-w-[33vw]"
                                     />
@@ -439,7 +458,19 @@ export default function Booking() {
                     <View className="items-center">
                         <TouchableOpacity
                             className="w-[90%] mx-5 h-10 mt-8 rounded-lg justify-center items-center bg-primary"
-                            onPress={submitCustomerForm}
+                            onPress={() => {
+                                if (
+                                    !customerForm.ceiAmount ||
+                                    !customerForm.descr ||
+                                    customerCe.id == "-2"
+                                ) {
+                                    alert(
+                                        "Цаг захиалгын мэдээллийг бүрэн оруулна уу"
+                                    );
+                                } else {
+                                    submitCustomerForm();
+                                }
+                            }}
                         >
                             <Text className="text-white">Хадгалах</Text>
                         </TouchableOpacity>
@@ -614,3 +645,6 @@ export default function Booking() {
         </View>
     );
 }
+
+// analysis - edit, delete, camera - delete -> status 2
+// booking - shine route -> zuvhun batalsan, zahialsan

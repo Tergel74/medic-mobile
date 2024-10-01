@@ -9,7 +9,7 @@ export async function get(endpoint: string) {
         const token = await getStorageItem("token");
 
         const res = await fetch(
-            `http://192.168.1.39:5012/api/admin${endpoint}`,
+            `http://172.20.10.8:5012/api/admin${endpoint}`,
             {
                 headers: {
                     "Content-Type": "application/json",
@@ -28,17 +28,13 @@ export async function get(endpoint: string) {
 export async function post(endpoint: string, data: {}) {
     try {
         const token = await getStorageItem("token");
-        const res = await fetch(`${API_BASE_URL}${endpoint}`, {
-            method: "POST",
+        const res = await axios.post(`${API_BASE_URL}${endpoint}`, data, {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify(data),
         });
-
-        const responseData = await res.json();
-        return responseData;
+        return res;
     } catch (err) {
         console.error("Error posting data:", err);
         throw err;
@@ -54,19 +50,6 @@ export async function del(endpoint: string, data: {}) {
             },
             data: data,
         });
-        // await fetch(`http://192.168.1.39:5012/api/admin${endpoint}`, {
-        //     method: "DELETE",
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //         Authorization: `Bearer ${token}`,
-        //     },
-        //     body: JSON.stringify(data),
-        // });
-
-        // if (res) {
-        //     const responseData = await res.json();
-        //     return responseData;
-        // }
     } catch (err) {
         console.error("Error posting data:", err);
         throw err;
